@@ -1,0 +1,10 @@
+[Trigger]
+Operation = Upgrade
+Type = Package
+Target = systemd
+
+[Action]
+Description = Generating initramfs...
+Depends = linux
+When = PostTransaction
+Exec = /usr/bin/mkinitcpio -p linux

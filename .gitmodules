@@ -1,0 +1,15 @@
+[submodule ".local/suckless/dwmblocks"]
+	path = .local/suckless/dwmblocks
+	url = git@github.com:Jirixek/dwmblocks.git
+[submodule ".local/suckless/dmenu"]
+	path = .local/suckless/dmenu
+	url = git@github.com:Jirixek/dmenu.git
+[submodule ".local/suckless/st"]
+	path = .local/suckless/st
+	url = git@github.com:Jirixek/st.git
+[submodule ".local/suckless/dwm"]
+	path = .local/suckless/dwm
+	url = git@github.com:Jirixek/dwm.git
+[submodule ".config/nvim"]
+	path = .config/nvim
+	url = git@github.com:Jirixek/vim.git

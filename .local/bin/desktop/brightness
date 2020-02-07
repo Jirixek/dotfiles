@@ -1,0 +1,8 @@
+#!/bin/sh
+
+
+case "$1" in
+	"up")   brightnessctl set 150+ ;;
+	"down") brightnessctl set 150- -n 1 ;;
+	*) ;;
+esac

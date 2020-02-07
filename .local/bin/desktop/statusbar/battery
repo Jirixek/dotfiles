@@ -1,0 +1,46 @@
+#!/bin/sh
+
+
+[ ! -d /sys/class/power_supply/BAT0 ] && return 0
+
+batteryCapacity="$(cat /sys/class/power_supply/BAT0/capacity)"
+batteryStatus="$(cat /sys/class/power_supply/BAT0/status)"
+
+case "$batteryStatus" in
+	Full)
+		batteryStatusIcon=''
+		;;
+	Charging)
+		batteryStatusIcon=''
+		;;
+	Discharging)
+		if [ "$batteryCapacity" -le 20 ]
+		then
+			batteryStatusIcon=''
+		elif [ "$batteryCapacity" -le 40 ]
+		then
+			batteryStatusIcon=''
+		elif [ "$batteryCapacity" -le 60 ]
+		then
+			batteryStatusIcon=''
+		elif [ "$batteryCapacity" -le 80 ]
+		then
+			batteryStatusIcon=''
+		else
+			batteryStatusIcon=''
+		fi
+		;;
+	*)
+		batteryStatusIcon=''
+		;;
+esac
+
+timeRemaining="$(acpi | head -1 | cut -d' ' -f5-)"
+
+printf '%s' "$batteryStatusIcon ${batteryCapacity}%"
+if [ -n "$timeRemaining" ]
+then
+	timeRemaining="$(echo "$timeRemaining" | sed -E 's/([[:digit:]]+):([[:digit:]]+):([[:digit:]]+).*/\1:\2/')"
+	printf ' %s' "$timeRemaining"
+fi
+echo

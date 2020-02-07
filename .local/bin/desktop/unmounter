@@ -1,0 +1,8 @@
+#!/bin/sh
+
+
+if [ -d "/run/media/$USER" ]
+then
+	SELECTED="$(find /run/media/"$USER"/ -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | dmenu)"
+	[ -n "$SELECTED" ] && umount /run/media/"$USER"/"$SELECTED"
+fi

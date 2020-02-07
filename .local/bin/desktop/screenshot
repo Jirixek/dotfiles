@@ -1,0 +1,13 @@
+#!/bin/sh
+
+
+IMGPATH="$HOME/Pictures/Screenshots/$(date '+%y%m%d_%H%M%S').png"
+case "$1" in
+	-w)  maim -u -i "$(xdotool getactivewindow)" "$IMGPATH" ;;
+	-s)  maim -u -s                              "$IMGPATH" ;;
+	 *)  maim -u                                 "$IMGPATH" ;;
+esac
+
+cat "$IMGPATH" | xclip -selection clipboard -t image/png
+
+exit 0

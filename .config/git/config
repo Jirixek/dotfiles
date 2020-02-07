@@ -1,0 +1,19 @@
+[user]
+	email = jirik.sz@gmail.com
+	name = Jiří Szkandera
+[core]
+	editor = nvim
+	excludesFile = ~/.config/git/ignore
+	pager = less -F -X -R
+[push]
+	default = simple
+[alias]
+	ll = log --oneline --graph --all --decorate
+	st = status
+	ci = commit
+	co = checkout
+	br = branch
+[color]
+	ui = auto
+[pull]
+	rebase = false

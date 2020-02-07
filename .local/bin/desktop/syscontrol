@@ -1,0 +1,10 @@
+#!/bin/sh
+
+
+CHOICE="$(printf '%s\n' 'Shutdown' 'Reboot' 'Suspend' | dmenu -i)"
+
+case "$CHOICE" in
+	"Shutdown") shutdown -h now    ;;
+	"Reboot")   reboot             ;;
+	"Suspend")  systemctl suspend  ;;
+esac

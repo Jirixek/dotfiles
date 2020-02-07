@@ -1,0 +1,25 @@
+#!/bin/sh
+
+
+case "$1" in
+	"pause")
+		dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause \
+			|| mpc toggle
+		;;
+	"play")
+		dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause \
+			|| mpc toggle
+		;;
+	"prev")
+		dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous \
+			|| mpc prev
+		;;
+	"next")
+		dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next \
+			|| mpc next
+		;;
+	"mute")  amixer sset Master toggle     ;;
+	"raise") amixer sset Master 5%+        ;;
+	"lower") amixer sset Master 5%-        ;;
+	*)       ncmpcpp                       ;;
+esac

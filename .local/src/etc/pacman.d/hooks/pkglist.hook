@@ -1,0 +1,9 @@
+[Trigger]
+Operation = Install
+Operation = Remove
+Type = Package
+Target = *
+
+[Action]
+When = PostTransaction
+Exec = /bin/bash -c '/home/jirik/.local/bin/pkgupdate.sh -g'

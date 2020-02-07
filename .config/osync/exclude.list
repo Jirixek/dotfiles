@@ -1,0 +1,13 @@
+.AppleDouble/
+.Trash-*/
+.recycle/
+$Recycle.Bin
+*.ini
+.DS_Store
+.DS_Store?
+.Spotlight-V100
+.Trashes
+._*
+System Volume Information
+Thumbs.db
+desktop.ini

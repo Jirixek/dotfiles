@@ -1,0 +1,11 @@
+#!/bin/sh
+
+
+cpuTemp="$(sensors | grep Package | awk '{print $4}' | tr -d '+')"
+if [ "$(echo "$cpuTemp" | cut -d. -f1)" -ge 50 ]
+then
+	cpuTempIcon=''
+else
+	cpuTempIcon=''
+fi
+echo "$cpuTempIcon $cpuTemp"

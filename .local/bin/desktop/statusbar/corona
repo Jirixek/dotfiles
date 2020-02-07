@@ -1,0 +1,5 @@
+#!/bin/sh
+
+
+curl 'https://corona-stats.online/CZ' >"$HOME"/.cache/corona_tmp 2>/dev/null && sed 's/\x1b\[[0-9;]*m//g; /^$/q' "$HOME"/.cache/corona_tmp >"$HOME"/.cache/corona
+grep 'Czechia' "$HOME"/.cache/corona | sed 's/ ▲//g; s/ //g' | awk -F '│' '{printf("%s (+%s), %s (+%s) - %s\n", $3, $4, $5, $6, $7)}'
