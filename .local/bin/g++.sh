@@ -98,6 +98,7 @@ do
 				exit 1
 			fi
 			shift
+			break
 			;;
 	esac
 done
@@ -127,12 +128,12 @@ then
 			outCMP=$(echo "$i" | sed 's/_in\.txt$/_cmp.txt/')
 			outREF=$(echo "$i" | sed 's/_in\.txt$/_ref.txt/')
 
-			/usr/bin/time --quiet -f "$i\t\tuser: %U s\tmemory: %M kB" ./"$executeFile" < "$i" > "$outCMP"
+			/usr/bin/time --quiet -f "$i\t\tuser: %U s\tmemory: %M kB" ./"$executeFile" "$@" < "$i" > "$outCMP"
 			diff --color="always" "$outCMP" "$outREF"
 		done
 	else
 		# case without unit tests, just execute program
-		/usr/bin/time --quiet -f "user: %U s\tmemory: %M kB" ./"$executeFile"
+		/usr/bin/time --quiet -f "user: %U s\tmemory: %M kB" ./"$executeFile" "$@"
 	fi
 else
 	exit 2
