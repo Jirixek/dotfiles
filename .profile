@@ -51,3 +51,6 @@ export GIT_PS1_SHOWUPSTREAM="auto verbose"
 
 # Make
 export MAKEFLAGS="-j$(nproc)"
+
+# CppUTest
+export CPPUTEST_HOME="$HOME/.local/cpputest"
