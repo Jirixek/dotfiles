@@ -25,7 +25,7 @@ osync-batch.sh --path="$HOME"/.config/osync/gDrive
 gDriveExit=$?
 
 # check if running on the ethernet
-if nmcli device | grep -Es 'ethernet[[:blank:]]+connected'
+if nmcli device | grep -Eq 'ethernet[[:blank:]]+connected'
 then
 	# ping on NAS
 	if ping -c 1 nas.lan &> /dev/null
