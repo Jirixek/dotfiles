@@ -3,7 +3,6 @@
 # This script synchronizes and backups system with osync
 # Executed daily by anacron
 
-
 if [ "$(id -u)" -eq 0 ]
 then
 	echo "This script is ment to be executed by normal user" >&2
@@ -43,4 +42,5 @@ case "$globalExit" in
 	*) info 'Synchronization complete' 'Unknown error'                           ;;
 esac
 
+rm "${PWD}/osync-batch.log"
 exit ${globalExit}
