@@ -35,7 +35,8 @@ case "$batteryStatus" in
 		;;
 esac
 
-timeRemaining="$(acpi | head -1 | cut -d' ' -f5-)"
+# Filter second battery with 0% (why is acpi displaying that?)
+timeRemaining="$(acpi | grep -wvF '0%' | cut -d' ' -f5-)"
 
 printf '%s' "$batteryStatusIcon ${batteryCapacity}%"
 if [ -n "$timeRemaining" ]
