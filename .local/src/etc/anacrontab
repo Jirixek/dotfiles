@@ -16,4 +16,5 @@ START_HOURS_RANGE=3-22
 @monthly	45		cron.monthly		nice run-parts /etc/cron.monthly
 1          	10    	backup                  /home/jirik/.local/bin/cron/backup.sh
 1          	15    	sync                    sudo -u jirik /home/jirik/.local/bin/cron/sync.sh
+1		20		update-vim-plugins	sudo -u jirik /home/jirik/.local/bin/cron/update-vim-plugins.sh
 14		20		pacman.clearCache		pacman -Sc --noconfirm
