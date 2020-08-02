@@ -1,0 +1,248 @@
+# Basic Options
+#
+# interpreter for shell commands (needs to be POSIX compatible)
+set shell bash
+
+set ratios 1:3:4 # set ratios similar to ranger
+set color256 on
+set drawbox on
+set scrolloff 4
+set ifs "\n"
+set findlen 2 # 0 is to search until matched
+set ignoredia on
+set smartdia on
+set globsearch on
+set tabstop 6 # tabwidth
+set preview true
+set previewer ~/.config/lf/preview
+set period 1 # periodic loading
+set incsearch on
+
+# Functions
+cmd on-cd &{{
+	# display git repository status in your prompt
+	. /usr/share/git/completion/git-prompt.sh
+	GIT_PS1_SHOWDIRTYSTATE=1
+	GIT_PS1_SHOWSTASHSTATE=1
+	GIT_PS1_SHOWUNTRACKEDFILES=1
+	GIT_PS1_SHOWUPSTREAM="auto verbose"
+
+	git="$(__git_ps1 [%s])" || true
+	PS1="\033[01;32m%u@%h \033[01;34m%w\033[0m\033[1m%f \033[01;33m$git"
+	lf -remote "send $id set promptfmt \"$PS1\""
+}}
+on-cd # ensure on-cd runs on startup
+
+# define a custom 'open' command
+# This command is called when current file is not a directory. You may want to
+# use either file extensions and/or mime types here. Below uses an editor for
+# text files and a file opener for the rest.
+cmd open ${{
+    case $(file --mime-type "$f" -b) in
+        text/*) "$EDITOR" $fx;;
+        *) for f in $fx; do setsid $OPENER $f &> /dev/null & done;;
+    esac
+}}
+
+#TODO
+# cmd rename %{{
+	# if [ -n $fx ]
+	# then
+	# 	# bulkrename
+	# elif [ -f $f ]
+	# then
+	# 	# vymazat koncovku
+	# else
+	# 	# normalka
+	# fi
+# }}
+
+cmd sudoerr ${{
+	IFS=" "
+	cmd="$(echo $1)"
+	shift
+
+	IFS=" \n"
+	exit=0
+	for arg in "$@"
+	do
+		err="$(sudo $cmd "$arg" 2>&1)"
+		exit=$(($? > $exit ? $? : $exit))
+	done
+
+	[ $exit -ne 0 ] && lf -remote "send $id echoerr $err"
+}}
+
+cmd mkdir %{{
+	printf 'Directory name: '
+	read dirname
+	mkdir "$dirname" && exit 0
+
+	printf "Creation failed. Create with sudo? [y/N] "
+	read -n1 ans
+	[ "$ans" != 'y' ] && exit 0
+
+	lf -remote "send $id sudoerr \"mkdir\" \"$dirname\""
+}}
+
+cmd touch %{{
+	printf 'File name: '
+	read filename
+	touch "$filename" && exit 0
+
+	printf 'Creation failed. Create with sudo? [y/N] '
+	read -n1 ans
+	[ "$ans" != 'y' ] && exit 0
+
+	lf -remote "send $id sudoerr \"touch\" \"$filename\""
+}}
+
+cmd delete %{{
+	set -f
+
+	printf 'Delete? [y/N] '
+	read ans
+	[ "$ans" != 'y' ] && exit 0
+
+	rm -rf $fx && exit 0
+
+	printf 'Deletion failed. Delete with sudo? [y/N] '
+	read ans
+	[ "$ans" != 'y' ] && exit 0
+
+	args="$(printf '%s\t' $fx)"
+	IFS="\t"
+	lf -remote "send $id sudoerr \"rm -rf\" $args"
+}}
+
+cmd high %{{
+}}
+
+cmd middle %{{
+}}
+
+cmd low %{{
+}}
+
+# TODO: async and also exlore stuff below
+cmd dragon %dragon-drag-and-drop -a -x $fx
+cmd dragon-stay %dragon-drag-and-drop -a $fx
+cmd dragon-individual %dragon-drag-and-drop $fx
+cmd cpdragon %cpdragon
+cmd mvdragon %mvdragon
+cmd dlfile %dlfile
+
+# Compress
+# TODO: more files
+# TODO: status bar
+# compress current file or selected files with tar and gunzip
+cmd tar ${{
+    set -f
+    mkdir $1
+    cp -r $fx $1
+    tar czf $1.tar.gz $1
+    rm -rf $1
+}}
+
+# compress current file or selected files with zip
+cmd zip ${{
+    set -f
+    mkdir $1
+    cp -r $fx $1
+    zip -r $1.zip $1
+    rm -rf $1
+}}
+cmd targz %tar cvzf "$f.tar.gz" "$f"
+cmd tarbz2 %tar cjvf "$f.tar.bz2" "$f"
+
+# --------------- trash ---------------
+
+# make sure trash folder exists
+# %mkdir -p ~/.trash
+
+# -----------------------------------------------
+
+# Locations
+# ROOT
+map g/  cd /
+map ge  cd /etc/
+map gH  cd /home/
+
+map gm. cd /mnt/
+map gmm cd /mnt/mrdky/
+map gmM cd /mnt/mrdky/Movies/
+map gmn cd /mnt/nas/
+map gmw cd /mnt/windows/
+
+map gr  %[ -d /run/media/"$USER"/ ] && lf -remote "send $id cd /run/media/$USER/"
+
+map gv. cd /var/
+map gvl cd /var/lib/lxc/
+
+# HOME
+map gh  cd ~/
+map gc  cd ~/.config/
+
+map gl. cd ~/.local/
+map glb cd ~/.local/bin/
+map glS cd ~/.local/src/
+map gls cd ~/.local/suckless/
+map gla cd ~/.local/share/Anki2/Jiri\ Szkandera/collection.media/
+
+map gd. cd ~/Documents/
+map gdc cd ~/Documents/cvut/
+map gdf cd ~/Documents/faktury/
+map gdl cd ~/Documents/latex/
+map gdP cd ~/Documents/private/
+map gdp cd ~/Documents/programming/
+
+map gD  cd ~/Downloads/
+map gM  cd ~/Music/
+map gp. cd ~/Pictures/
+map gps cd ~/Pictures/Screenshots/
+map gpm cd ~/Pictures/Memes/
+map gv  cd ~/Videos/
+
+# --------------------------------------------
+# ARCHIVES
+map az zip
+map at tar
+map ag tar.gz
+map ab tar.bz2
+map x  $extract $fx
+
+# Movement
+map H high
+map M middle
+map L low
+
+# OTHER
+map D delete
+map e $"$EDITOR" $fx
+map i $~/.config/lf/preview $f | "$PAGER" -R
+map <enter> open
+
+# TODO: listen to esc
+map w
+map wf touch
+map wd mkdir
+
+# CMD up/down
+cmap <up> cmd-history-prev
+cmap <down> cmd-history-next
+
+# TODO: map trash
+# map gtr cd ~/.local/share/Trash/files
+# -----------------------------------------------
+
+# TODO: hook
+# cmd recol %{{
+#     w=$(tput cols)
+#     if [ $w -le 80 ]; then
+#         lf -remote "send $id set ratios 1:2"
+#     elif [ $w -le 160 ]; then
+#         lf -remote "send $id set ratios 1:2:3"
+#     else
+#         lf -remote "send $id set ratios 1:2:3:5"
+#     fi
+# }}
