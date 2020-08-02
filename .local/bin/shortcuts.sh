@@ -7,18 +7,20 @@ v () {
 	return 0
 }
 
-r () {
-	# setup ranger so it cds to directory when exited
+f () {
+	# setup lf so it changes to the last directory when exited
 	local tempfile
-	tempfile="$(mktemp --tmpdir=/tmp)" || {
+	tempfile="$(mktemp)" || {
 		echo "Can't create tmpfile" >&2
-			return 2
-		}
-	ranger --choosedir="$tempfile" "$@"
-	flag=0
-	cd "$(cat "$tempfile")" || flag=1
+		return 2
+	}
+	lf -last-dir-path="$tempfile" "$@"
+	[ ! -f "$tempfile" ] && return 2
+
+	dir="$(cat "$tempfile")"
 	rm -f "$tempfile"
-	return "$flag"
+	[ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir" || return 1
+	return 0
 }
 
 cc () {
@@ -68,33 +70,5 @@ fk () {
 	cd "$TARGETDIR" || return 1
 	local TARGET=''
 	TARGET="${TARGETDIR}$(find "$TARGETDIR" -mindepth 1 -maxdepth 1 -type d -name '[^.]*' -printf '%f\n' | fzf)" && "$FILE" "$TARGET"
-	return 0
-}
-
-extract () {
-	if [ -f "$1" ]
-	then
-		NEWDIR="$(basename "$1" | sed -E 's/\..+//')"
-		case "$1" in
-			*.tar.bz2) mkdir -p "$NEWDIR" && tar --directory="$NEWDIR" -xvjf "$1" ;;
-			*.tbz2)    mkdir -p "$NEWDIR" && tar --directory="$NEWDIR" -xvjf "$1" ;;
-			*.tar.gz)  mkdir -p "$NEWDIR" && tar --directory="$NEWDIR" -xvzf "$1" ;;
-			*.tgz)     mkdir -p "$NEWDIR" && tar --directory="$NEWDIR" -xvzf "$1" ;;
-			*.tar)     mkdir -p "$NEWDIR" && tar --directory="$NEWDIR" -xvf "$1"  ;;
-			*.bz2)     bunzip2 "$1"                                               ;;
-			*.gz)      gunzip "$1"                                                ;;
-			*.rar)     unrar "$1" "$NEWDIR"                                       ;;
-			*.zip)     unzip -d "$NEWDIR" "$1"                                    ;;
-			*.Z)       uncompress "$1"                                            ;;
-			*.7z)      7z "$1"                                                    ;;
-			*)
-				echo "don't know how to extract '$1'..." >&2
-				return 2
-				;;
-	esac
-else
-	echo "'$1' is not a valid file!" >&2
-	return 2
-	fi
 	return 0
 }
