@@ -44,18 +44,88 @@ cmd open ${{
     esac
 }}
 
-#TODO
-# cmd rename %{{
-	# if [ -n $fx ]
-	# then
-	# 	# bulkrename
-	# elif [ -f $f ]
-	# then
-	# 	# vymazat koncovku
-	# else
-	# 	# normalka
-	# fi
-# }}
+# ==========
+#  Renaming
+# ==========
+cmd rename_clear_all &{{
+	lf -remote "send $id rename"
+	lf -remote "send $id push <c-u>"
+}}
+
+cmd rename_clear &{{
+	if [ -n "$fs" ]
+	then
+		# Bulkrename
+		lf -remote "send $id rename_bulk"
+	elif [ -f "$f" ]
+	then
+		# File
+		filename="${f##*/}"                     # Get 'basename' of the selection
+		extension="${filename##*.}"             # Get extension only
+
+		# If file doesn't have any extension, clear all
+		[ "$extension" = "$filename" ] && \
+			lf -remote "send $id rename_clear_all" && exit
+
+		extension="$(printf '%q' "$extension")" # Escape bash sequences
+		extension="${extension//\\ /<space>}"
+		lf -remote "send $id rename"
+		lf -remote "send $id push <c-u>.$extension<home>"
+	else
+		# Other
+		lf -remote "send $id rename_clear_all"
+	fi
+}}
+
+cmd rename_edit &{{
+	if [ -n "$fs" ]
+	then
+		# Bulkrename
+		lf -remote "send $id rename_bulk"
+	elif [ -f "$f" ]
+	then
+		# File
+		filename="${f##*/}"         # Get 'basename' of the selection
+		extension="${filename##*.}" # Get extension only
+
+		# If file doesn't have any extension, handle normally
+		[ "$extension" = "$filename" ] && \
+			lf -remote "send $id rename" && exit
+
+		lefts="$(printf '%0.s<left>' $(seq 0 "${#extension}"))"
+		lf -remote "send $id rename"
+		lf -remote "send $id push $lefts"
+	else
+		# Other
+		lf -remote "send $id rename"
+	fi
+}}
+
+cmd rename_bulk ${{
+	old="$(mktemp)"
+	new="$(mktemp)"
+	# [ -n $fs ] && fs=$(ls)
+	printf "$fs\n" > "$old"
+	printf "$fs\n" > "$new"
+	"$EDITOR" "$new"
+	[ "$(cat "$new" | wc -l)" -ne "$(cat "$old" | wc -l)" ] && exit
+	paste "$old" "$new" | while read names
+	do
+		src=$(printf "$names" | cut -f1)
+		dst=$(printf "$names" | cut -f2)
+		[ "$src" = "$dst" ] && continue
+		[ -e "$dst" ] && continue
+		mv "$src" "$dst"
+	done
+	rm "$old" "$new"
+	lf -remote "send $id unselect"
+}}
+
+cmd rename_front &{{
+	lf -remote "send $id rename"
+	lf -remote "send $id push <home>"
+}}
+cmd rename_back  &lf -remote "send $id rename"
 
 cmd sudoerr ${{
 	IFS=" "
@@ -204,6 +274,13 @@ map gpm cd ~/Pictures/Memes/
 map gv  cd ~/Videos/
 
 # --------------------------------------------
+# Rename
+map r
+map re rename_edit
+map rc rename_clear
+map I  rename_front
+map A  rename_back
+
 # ARCHIVES
 map az zip
 map at tar
