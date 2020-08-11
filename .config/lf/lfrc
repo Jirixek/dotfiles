@@ -210,31 +210,6 @@ cmd cpdragon %cpdragon
 cmd mvdragon %mvdragon
 cmd dlfile %dlfile
 
-# =============
-#  Compression
-# =============
-# TODO: more files
-# TODO: status bar
-cmd tar ${{
-    set -f
-    mkdir $1
-    cp -r $fx $1
-    tar czf $1.tar.gz $1
-    rm -rf $1
-}}
-
-cmd zip ${{
-    set -f
-    mkdir $1
-    cp -r $fx $1
-    zip -r $1.zip $1
-    rm -rf $1
-}}
-cmd targz %tar cvzf "$f.tar.gz" "$f"
-cmd tarbz2 %tar cjvf "$f.tar.bz2" "$f"
-
-
-
 # =======
 #  Trash
 # =======
@@ -292,10 +267,10 @@ map I  rename_front
 map A  rename_back
 
 # Archives
-map az zip
-map at tar
-map ag tar.gz
-map ab tar.bz2
+map az $lf_zip "$id" $fx
+map at $lf_tar "$id" $fx
+map ag $lf_targz "$id" $fx
+map ab $lf_tarbz2 "$id" $fx
 map x  $extract $fx
 
 # Movement

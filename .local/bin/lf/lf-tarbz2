@@ -1,0 +1,11 @@
+#!/bin/sh
+
+
+. lf-archive-functions
+
+lf_get_filename
+lf_check_filename "$1" "tar.bz2"
+
+set -f
+shift
+tar --transform="s|.*/\([^/]*\)|${filename}/\1|" -cvjf "${filename}.tar.bz2" "$@"

@@ -1,0 +1,18 @@
+#!/bin/sh
+
+
+. lf-archive-functions
+
+# This sets variable 'filename'
+lf_get_filename
+lf_check_filename "$1" "zip"
+
+set -f
+shift
+mkdir "$filename"
+for file in "$@"
+do
+	ln "$file" "${filename}/"
+done
+zip -r "${filename}.zip" "${filename}/"
+rm -rf "${filename}/"
