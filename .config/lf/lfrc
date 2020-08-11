@@ -1,9 +1,9 @@
-# Basic Options
-#
-# interpreter for shell commands (needs to be POSIX compatible)
-set shell bash
+# ===============
+#  Basic Options
+# ===============
+set shell bash # Interpreter for shell commands (needs to be POSIX compatible)
 
-set ratios 1:3:4 # set ratios similar to ranger
+set ratios 1:3:4 # Set ratios similar to ranger
 set color256 on
 set drawbox on
 set scrolloff 4
@@ -12,15 +12,17 @@ set findlen 2 # 0 is to search until matched
 set ignoredia on
 set smartdia on
 set globsearch on
-set tabstop 6 # tabwidth
+set tabstop 6 # Tabwidth
 set preview true
 set previewer ~/.config/lf/preview
-set period 1 # periodic loading
+set period 1 # Periodic loading
 set incsearch on
 
-# Functions
+# ===========
+#  Functions
+# ===========
 cmd on-cd &{{
-	# display git repository status in your prompt
+	# Display git repository status in your prompt
 	. /usr/share/git/completion/git-prompt.sh
 	GIT_PS1_SHOWDIRTYSTATE=1
 	GIT_PS1_SHOWSTASHSTATE=1
@@ -31,9 +33,9 @@ cmd on-cd &{{
 	PS1="\033[01;32m%u@%h \033[01;34m%w\033[0m\033[1m%f \033[01;33m$git"
 	lf -remote "send $id set promptfmt \"$PS1\""
 }}
-on-cd # ensure on-cd runs on startup
+on-cd # Ensure on-cd runs on startup
 
-# define a custom 'open' command
+# Define a custom 'open' command
 # This command is called when current file is not a directory. You may want to
 # use either file extensions and/or mime types here. Below uses an editor for
 # text files and a file opener for the rest.
@@ -60,7 +62,7 @@ cmd rename_clear &{{
 	elif [ -f "$f" ]
 	then
 		# File
-		filename="${f##*/}"                     # Get 'basename' of the selection
+		filename="${f##*/}"                     # Get basename of the selection
 		extension="${filename##*.}"             # Get extension only
 
 		# If file doesn't have any extension, clear all
@@ -85,7 +87,7 @@ cmd rename_edit &{{
 	elif [ -f "$f" ]
 	then
 		# File
-		filename="${f##*/}"         # Get 'basename' of the selection
+		filename="${f##*/}"         # Get basename of the selection
 		extension="${filename##*.}" # Get extension only
 
 		# If file doesn't have any extension, handle normally
@@ -127,6 +129,9 @@ cmd rename_front &{{
 }}
 cmd rename_back  &lf -remote "send $id rename"
 
+# ===================
+#  File Manipulation
+# ===================
 cmd sudoerr ${{
 	IFS=" "
 	cmd="$(echo $1)"
@@ -185,6 +190,9 @@ cmd delete %{{
 	lf -remote "send $id sudoerr \"rm -rf\" $args"
 }}
 
+# ==========
+#  Movement
+# ==========
 cmd high %{{
 }}
 
@@ -202,10 +210,11 @@ cmd cpdragon %cpdragon
 cmd mvdragon %mvdragon
 cmd dlfile %dlfile
 
-# Compress
+# =============
+#  Compression
+# =============
 # TODO: more files
 # TODO: status bar
-# compress current file or selected files with tar and gunzip
 cmd tar ${{
     set -f
     mkdir $1
@@ -214,7 +223,6 @@ cmd tar ${{
     rm -rf $1
 }}
 
-# compress current file or selected files with zip
 cmd zip ${{
     set -f
     mkdir $1
@@ -225,15 +233,18 @@ cmd zip ${{
 cmd targz %tar cvzf "$f.tar.gz" "$f"
 cmd tarbz2 %tar cjvf "$f.tar.bz2" "$f"
 
-# --------------- trash ---------------
 
+
+# =======
+#  Trash
+# =======
 # make sure trash folder exists
 # %mkdir -p ~/.trash
 
-# -----------------------------------------------
-
-# Locations
-# ROOT
+# ========
+#  Maping
+# ========
+# Root
 map g/  cd /
 map ge  cd /etc/
 map gH  cd /home/
@@ -249,7 +260,7 @@ map gr  %[ -d /run/media/"$USER"/ ] && lf -remote "send $id cd /run/media/$USER/
 map gv. cd /var/
 map gvl cd /var/lib/lxc/
 
-# HOME
+# Home
 map gh  cd ~/
 map gc  cd ~/.config/
 
@@ -273,7 +284,6 @@ map gps cd ~/Pictures/Screenshots/
 map gpm cd ~/Pictures/Memes/
 map gv  cd ~/Videos/
 
-# --------------------------------------------
 # Rename
 map r
 map re rename_edit
@@ -281,7 +291,7 @@ map rc rename_clear
 map I  rename_front
 map A  rename_back
 
-# ARCHIVES
+# Archives
 map az zip
 map at tar
 map ag tar.gz
@@ -293,7 +303,7 @@ map H high
 map M middle
 map L low
 
-# OTHER
+# Other
 map D delete
 map e $"$EDITOR" $fx
 map i $~/.config/lf/preview $f | "$PAGER" -R
