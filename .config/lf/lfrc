@@ -46,6 +46,65 @@ cmd open ${{
     esac
 }}
 
+cmd sudoerr &{{
+	cmd="$1"
+	shift
+
+	IFS=" \n"
+	for arg in "$@"
+	do
+		err="$(sudo $cmd "$arg" 2>&1)"
+		[ $? -ne 0 ] && lf -remote "send $id echoerr $err" && exit
+	done
+
+	lf -remote "send $id reload"
+}}
+
+# ===================
+#  File Manipulation
+# ===================
+cmd mkdir %{{
+	printf 'Directory name: '
+	read dirname
+	mkdir "$dirname" && exit 0
+
+	printf "Creation failed. Create with sudo? [y/N] "
+	read -n1 ans
+	[ "$ans" != 'y' ] && exit 0
+
+	lf -remote "send $id sudoerr \"mkdir\" \"$dirname\""
+}}
+
+cmd touch %{{
+	printf 'File name: '
+	read filename
+	touch "$filename" && exit 0
+
+	printf 'Creation failed. Create with sudo? [y/N] '
+	read -n1 ans
+	[ "$ans" != 'y' ] && exit 0
+
+	lf -remote "send $id sudoerr \"touch\" \"$filename\""
+}}
+
+cmd delete %{{
+	set -f
+
+	printf 'Delete? [y/N] '
+	read ans
+	[ "$ans" != 'y' ] && exit 0
+
+	rm -rf $fx && exit 0
+
+	printf 'Deletion failed. Delete with sudo? [y/N] '
+	read ans
+	[ "$ans" != 'y' ] && exit 0
+
+	args="$(printf '%s\t' $fx)"
+	IFS="\t"
+	lf -remote "send $id sudoerr \"rm -rf\" $args"
+}}
+
 # ==========
 #  Renaming
 # ==========
@@ -129,64 +188,6 @@ cmd rename_front &{{
 }}
 cmd rename_back  &lf -remote "send $id rename"
 
-# ===================
-#  File Manipulation
-# ===================
-cmd sudoerr &{{
-	cmd="$1"
-	shift
-
-	IFS=" \n"
-	for arg in "$@"
-	do
-		err="$(sudo $cmd "$arg" 2>&1)"
-		[ $? -ne 0 ] && lf -remote "send $id echoerr $err" && exit
-	done
-	lf -remote "send $id reload"
-}}
-
-cmd mkdir %{{
-	printf 'Directory name: '
-	read dirname
-	mkdir "$dirname" && exit 0
-
-	printf "Creation failed. Create with sudo? [y/N] "
-	read -n1 ans
-	[ "$ans" != 'y' ] && exit 0
-
-	lf -remote "send $id sudoerr \"mkdir\" \"$dirname\""
-}}
-
-cmd touch %{{
-	printf 'File name: '
-	read filename
-	touch "$filename" && exit 0
-
-	printf 'Creation failed. Create with sudo? [y/N] '
-	read -n1 ans
-	[ "$ans" != 'y' ] && exit 0
-
-	lf -remote "send $id sudoerr \"touch\" \"$filename\""
-}}
-
-cmd delete %{{
-	set -f
-
-	printf 'Delete? [y/N] '
-	read ans
-	[ "$ans" != 'y' ] && exit 0
-
-	rm -rf $fx && exit 0
-
-	printf 'Deletion failed. Delete with sudo? [y/N] '
-	read ans
-	[ "$ans" != 'y' ] && exit 0
-
-	args="$(printf '%s\t' $fx)"
-	IFS="\t"
-	lf -remote "send $id sudoerr \"rm -rf\" $args"
-}}
-
 # ===============
 #  Fuzzy finding
 # ===============
@@ -223,6 +224,9 @@ cmd middle %{{
 cmd low %{{
 }}
 
+# ========
+#  Dragon
+# ========
 # TODO: async and also exlore stuff below
 cmd dragon %dragon-drag-and-drop -a -x $fx
 cmd dragon-stay %dragon-drag-and-drop -a $fx
@@ -234,12 +238,75 @@ cmd dlfile %dlfile
 # =======
 #  Trash
 # =======
+# TODO
 # make sure trash folder exists
 # %mkdir -p ~/.trash
 
-# ========
-#  Maping
-# ========
+# ==========
+#  Resizing
+# ==========
+# TODO: hook
+# cmd recol %{{
+#     w=$(tput cols)
+#     if [ $w -le 80 ]; then
+#         lf -remote "send $id set ratios 1:2"
+#     elif [ $w -le 160 ]; then
+#         lf -remote "send $id set ratios 1:2:3"
+#     else
+#         lf -remote "send $id set ratios 1:2:3:5"
+#     fi
+# }}
+
+# =================
+#  Command mapping
+# =================
+# File manipulation
+# TODO: listen to esc
+map w
+map wf touch
+map wd mkdir
+map D delete
+
+# Renaming
+map r
+map re rename_edit
+map rc rename_clear
+map I  rename_front
+map A  rename_back
+
+# Fuzzy finding
+map / fzf_locate
+map f fzf_find
+
+# Movement
+map H high
+map M middle
+map L low
+
+# Archives
+map az $lf_zip "$id" $fx
+map at $lf_tar "$id" $fx
+map ag $lf_targz "$id" $fx
+map ab $lf_tarbz2 "$id" $fx
+map x  $extract $fx
+
+# TODO: Dragon
+
+# TODO: Trash
+# map gtr cd ~/.local/share/Trash/files
+
+# Other
+map e $"$EDITOR" $fx
+map i $~/.config/lf/preview $f | "$PAGER" -R
+map <enter> open
+
+# Command line
+cmap <up> cmd-history-prev
+cmap <down> cmd-history-next
+
+# ===================
+#  Directory mapping
+# ===================
 # Root
 map g/  cd /
 map ge  cd /etc/
@@ -279,57 +346,3 @@ map gp. cd ~/Pictures/
 map gps cd ~/Pictures/Screenshots/
 map gpm cd ~/Pictures/Memes/
 map gv  cd ~/Videos/
-
-# Rename
-map r
-map re rename_edit
-map rc rename_clear
-map I  rename_front
-map A  rename_back
-
-# Archives
-map az $lf_zip "$id" $fx
-map at $lf_tar "$id" $fx
-map ag $lf_targz "$id" $fx
-map ab $lf_tarbz2 "$id" $fx
-map x  $extract $fx
-
-# Movement
-map H high
-map M middle
-map L low
-
-# Fuzzy finding
-map / fzf_locate
-map f fzf_find
-
-# Other
-map D delete
-map e $"$EDITOR" $fx
-map i $~/.config/lf/preview $f | "$PAGER" -R
-map <enter> open
-
-# TODO: listen to esc
-map w
-map wf touch
-map wd mkdir
-
-# CMD up/down
-cmap <up> cmd-history-prev
-cmap <down> cmd-history-next
-
-# TODO: map trash
-# map gtr cd ~/.local/share/Trash/files
-# -----------------------------------------------
-
-# TODO: hook
-# cmd recol %{{
-#     w=$(tput cols)
-#     if [ $w -le 80 ]; then
-#         lf -remote "send $id set ratios 1:2"
-#     elif [ $w -le 160 ]; then
-#         lf -remote "send $id set ratios 1:2:3"
-#     else
-#         lf -remote "send $id set ratios 1:2:3:5"
-#     fi
-# }}
