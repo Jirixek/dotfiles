@@ -29,7 +29,6 @@ docker
 doxygen
 dragon-drag-and-drop
 dunst
-dwm
 efibootmgr
 entr
 eog
@@ -38,7 +37,6 @@ evince
 fakeroot
 firefox
 flex
-freefilesync
 freerapid
 fzf
 gcc
@@ -49,6 +47,7 @@ gpick
 groff
 grub
 haveged
+highlight
 htop
 imwheel
 j4-dmenu-desktop
@@ -72,7 +71,7 @@ maim
 make
 man-db
 man-pages
-mathematica
+minicom
 mint-y-icons
 mlocate
 mpc
@@ -94,7 +93,6 @@ numlockx
 oomox
 openssh
 openvpn
-oracle-sqldeveloper
 os-prober
 osync
 par
@@ -110,12 +108,10 @@ redshift
 rng-tools
 shellcheck
 simple-mtpfs
-skypeforlinux-stable-bin
 smartmontools
 spotify
 spotifywm-git
 sshfs
-st
 sudo
 system-config-printer
 teamspeak3
@@ -140,7 +136,6 @@ texlive-publishers
 texlive-science
 thunderbird
 time
-tllocalmgr-git
 tlp
 tlp-rdw
 ttf-font-awesome
