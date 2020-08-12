@@ -132,20 +132,17 @@ cmd rename_back  &lf -remote "send $id rename"
 # ===================
 #  File Manipulation
 # ===================
-cmd sudoerr ${{
-	IFS=" "
-	cmd="$(echo $1)"
+cmd sudoerr &{{
+	cmd="$1"
 	shift
 
 	IFS=" \n"
-	exit=0
 	for arg in "$@"
 	do
 		err="$(sudo $cmd "$arg" 2>&1)"
-		exit=$(($? > $exit ? $? : $exit))
+		[ $? -ne 0 ] && lf -remote "send $id echoerr $err" && exit
 	done
-
-	[ $exit -ne 0 ] && lf -remote "send $id echoerr $err"
+	lf -remote "send $id reload"
 }}
 
 cmd mkdir %{{
