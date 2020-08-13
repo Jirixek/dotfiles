@@ -108,7 +108,7 @@ cmd delete %{{
 # ==========
 #  Renaming
 # ==========
-cmd rename_clear_all &lf -remote "send $id rename"$'\n'"send $id push <c-u>"
+cmd rename_clear_all &lf -remote "send $id :rename; cmd-delete-home"
 
 cmd rename_clear &{{
 	if [ -n "$fs" ]
@@ -127,7 +127,7 @@ cmd rename_clear &{{
 
 		extension="$(printf '%q' "$extension")" # Escape bash sequences
 		extension="${extension//\\ /<space>}"
-		lf -remote "send $id rename"$'\n'"send $id push <c-u>.$extension<home>"
+		lf -remote "send $id :rename; cmd-delete-home"$'\n'"send $id push .$extension<home>"
 	else
 		# Other
 		lf -remote "send $id rename_clear_all"
@@ -149,8 +149,8 @@ cmd rename_edit &{{
 		[ "$extension" = "$filename" ] && \
 			lf -remote "send $id rename" && exit
 
-		lefts="$(printf '%0.s<left>' $(seq 0 "${#extension}"))"
-		lf -remote "send $id rename"$'\n'"send $id push $lefts"
+		lefts="$(printf '%0.scmd-left; ' $(seq 0 "${#extension}"))"
+		lf -remote "send $id :rename; $lefts"
 	else
 		# Other
 		lf -remote "send $id rename"
@@ -177,8 +177,7 @@ cmd rename_bulk ${{
 	lf -remote "send $id unselect"
 }}
 
-cmd rename_front &lf -remote "send $id rename"$'\n'"send $id push <home>"
-cmd rename_back  &lf -remote "send $id rename"
+cmd rename_front :rename; cmd-home
 
 # ===============
 #  Fuzzy finding
@@ -264,7 +263,7 @@ map r
 map re rename_edit
 map rc rename_clear
 map I  rename_front
-map A  rename_back
+map A  rename
 
 # Fuzzy finding
 map / fzf_locate
