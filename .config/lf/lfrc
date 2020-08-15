@@ -108,10 +108,7 @@ cmd delete %{{
 # ==========
 #  Renaming
 # ==========
-cmd rename_clear_all &{{
-	lf -remote "send $id rename"
-	lf -remote "send $id push <c-u>"
-}}
+cmd rename_clear_all &lf -remote "send $id rename"$'\n'"send $id push <c-u>"
 
 cmd rename_clear &{{
 	if [ -n "$fs" ]
@@ -130,8 +127,7 @@ cmd rename_clear &{{
 
 		extension="$(printf '%q' "$extension")" # Escape bash sequences
 		extension="${extension//\\ /<space>}"
-		lf -remote "send $id rename"
-		lf -remote "send $id push <c-u>.$extension<home>"
+		lf -remote "send $id rename"$'\n'"send $id push <c-u>.$extension<home>"
 	else
 		# Other
 		lf -remote "send $id rename_clear_all"
@@ -154,8 +150,7 @@ cmd rename_edit &{{
 			lf -remote "send $id rename" && exit
 
 		lefts="$(printf '%0.s<left>' $(seq 0 "${#extension}"))"
-		lf -remote "send $id rename"
-		lf -remote "send $id push $lefts"
+		lf -remote "send $id rename"$'\n'"send $id push $lefts"
 	else
 		# Other
 		lf -remote "send $id rename"
@@ -182,10 +177,7 @@ cmd rename_bulk ${{
 	lf -remote "send $id unselect"
 }}
 
-cmd rename_front &{{
-	lf -remote "send $id rename"
-	lf -remote "send $id push <home>"
-}}
+cmd rename_front &lf -remote "send $id rename"$'\n'"send $id push <home>"
 cmd rename_back  &lf -remote "send $id rename"
 
 # ===============
