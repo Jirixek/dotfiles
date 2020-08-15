@@ -55,6 +55,7 @@ j4-dmenu-desktop
 jack2
 java8-openjfx
 kitty
+lf
 libnma
 libreoffice-still
 libtool
@@ -105,7 +106,6 @@ pkgfile
 profile-sync-daemon
 pulseaudio-alsa
 qbittorrent
-ranger
 redshift
 rng-tools
 shellcheck
