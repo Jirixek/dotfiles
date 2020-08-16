@@ -1,0 +1,21 @@
+#!/bin/sh
+
+
+for file in "$@"
+do
+	case "$file" in
+		*.tar.bz2 | *.tbz2) tar -xvjf "$file" ;;
+		*.tar.gz | *.tgz) tar -xvzf "$file" ;;
+		*.tar) tar -xvf "$file" ;;
+		*.bz2) bunzip2 "$file" ;;
+		*.gz) gunzip "$file" ;;
+		*.rar) unrar "$file" ;;
+		*.zip) unzip -d "$file" ;;
+		*.Z) uncompress "$file" ;;
+		*.7z) 7z "$file" ;;
+		*)
+			echo "Don't know how to extract '$file'" >&2
+			return 1
+			;;
+	esac
+done

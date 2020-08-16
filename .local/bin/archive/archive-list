@@ -1,0 +1,21 @@
+#!/bin/sh
+
+
+for file in "$@"
+do
+	case "$file" in
+		*.tar.bz2 | *.tbz2) tar -tjf "$file" ;;
+		*.tar.gz | *.tgz) tar -tzf "$file" ;;
+		*.tar) tar -tf "$file" ;;
+		*.bz2) bzip2 -dk "$file" ;;
+		*.gz) tar -tf "$file" ;;
+		*.rar) unrar l "$file" ;;
+		*.zip) unzip -l "$file" ;;
+		*.Z) uncompress -c "$file" ;;
+		*.7z) 7z l "$file" ;;
+		*)
+			echo "Don't know how to list '$file'..." >&2
+			return 1
+			;;
+	esac
+done
