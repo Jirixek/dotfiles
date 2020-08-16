@@ -1,6 +1,6 @@
 # Profile file. Runs on login. Environmental variables are set here.
 
-export PATH="$HOME/.local/bin:$HOME/.local/bin/desktop:$HOME/.local/bin/cron:$PATH"
+export PATH="$(find "${HOME}/.local/bin/" -maxdepth 1 -type d -printf '%p:')$PATH"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
