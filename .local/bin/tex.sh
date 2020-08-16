@@ -24,5 +24,3 @@ lualatex "$compileFile"
 
 # echo
 # texcount "$compileFile"
-
-exit 0

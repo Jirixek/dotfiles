@@ -68,5 +68,3 @@ yayInstall "$new_pkgs" || exit 1
 current_pkgs="$(pacman -Qqe | sort)"
 old_pkgs="$(filterMatches <(comm -23 <(echo "$current_pkgs") <(sort "$targetFile")))"
 yayUninstall "$old_pkgs" || exit 1
-
-exit 0

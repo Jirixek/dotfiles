@@ -123,5 +123,3 @@ fi
 } || exit 1
 
 "$HOME"/.local/bin/linker.sh -w || exit 2
-
-exit 0

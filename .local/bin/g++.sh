@@ -138,5 +138,3 @@ then
 else
 	exit 2
 fi
-
-exit 0

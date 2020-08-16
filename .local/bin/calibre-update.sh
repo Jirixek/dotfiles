@@ -17,5 +17,3 @@ then
 else
 	echo 'Calibre is up to date'
 fi
-
-exit 0
