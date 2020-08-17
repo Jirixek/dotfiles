@@ -111,15 +111,19 @@ cmd delete %{{
 cmd rename_clear_all &lf -remote "send $id :rename; cmd-delete-home"
 
 cmd rename_clear &{{
-	if [ -n "$fs" ]
-	then
-		# Bulkrename
+	# Multiple files - bulkrename
+	[ "$(echo "$fx" | grep -v '^$' | wc -l)" -gt 1 ] && {
 		lf -remote "send $id rename_bulk"
-	elif [ -f "$f" ]
+		exit
+	}
+
+	# Single file
+	[ -n "$fs" ] && file="$fs" || file="$f"
+	if [ -f "$file" ]
 	then
 		# File
-		filename="${f##*/}"                     # Get basename of the selection
-		extension="${filename##*.}"             # Get extension only
+		filename="${file##*/}"      # Get basename of the selection
+		extension="${filename##*.}" # Get extension only
 
 		# If file doesn't have any extension, clear all
 		[ "$extension" = "$filename" ] && \
@@ -135,14 +139,18 @@ cmd rename_clear &{{
 }}
 
 cmd rename_edit &{{
-	if [ -n "$fs" ]
-	then
-		# Bulkrename
+	# Multiple files - bulkrename
+	[ "$(echo "$fx" | grep -v '^$' | wc -l)" -gt 1 ] && {
 		lf -remote "send $id rename_bulk"
-	elif [ -f "$f" ]
+		exit
+	}
+
+	# Single file
+	[ -n "$fs" ] && file="$fs" || file="$f"
+	if [ -f "$file" ]
 	then
 		# File
-		filename="${f##*/}"         # Get basename of the selection
+		filename="${file##*/}"      # Get basename of the selection
 		extension="${filename##*.}" # Get extension only
 
 		# If file doesn't have any extension, handle normally
