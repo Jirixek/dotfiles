@@ -226,13 +226,16 @@ cmd low %{{
 # ========
 #  Dragon
 # ========
-# TODO: async and also exlore stuff below
-cmd dragon %dragon-drag-and-drop -a -x $fx
-cmd dragon-stay %dragon-drag-and-drop -a $fx
-cmd dragon-individual %dragon-drag-and-drop $fx
-cmd cpdragon %cpdragon
-cmd mvdragon %mvdragon
-cmd dlfile %dlfile
+cmd dragon &{{
+	if [ "$(echo "$fx" | wc -l)" -gt 1 ]
+	then
+		# Multiple files
+		dragon-drag-and-drop $fx
+	else
+		# Single file
+		dragon-drag-and-drop --and-exit $fx
+	fi
+}}
 
 # =======
 #  Trash
@@ -289,7 +292,7 @@ map ag $lf_targz "$id" $fx
 map ab $lf_tarbz2 "$id" $fx
 map x  $extract $fx
 
-# TODO: Dragon
+map - dragon
 
 # TODO: Trash
 # map gtr cd ~/.local/share/Trash/files
