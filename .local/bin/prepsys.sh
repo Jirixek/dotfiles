@@ -7,18 +7,17 @@ if [ "$(id -u)" -eq 0 ]; then
 fi
 
 getHelp() {
-	echo "Usage: $(basename "$0") [OPTION]"
+	echo "Usage: $(basename "$0") [OPTIONS] FILE"
 	echo "Configure system for optimal use"
+	echo "Supply FILE as a list of packages that you want to install"
 	echo
 	echo "Options:"
 	echo "-h, --help      Show brief help"
-	echo "-f              Provide file with packages"
 	echo "-t, --tlp       Install tlp (laptop battery management system)"
-	echo "-v, --vim       Set up vim directory"
 	exit 127
 }
 
-CURRENTFOLDER=$(dirname "$0")
+CURRENTFOLDER="$(dirname "$0")"
 INSTALLFILE=""
 
 while [ "$#" -gt 0 ]
@@ -31,29 +30,14 @@ do
 			sudo systemctl mask systemd-rfkill.service systemd-rfkill.socket      || exit 1
 			shift
 			;;
-		-v|--vim)
-			(
-				sudo pacman -Syu --needed git openssh || return 1
-				VIMDIR="$HOME/.config/nvim"
-				if [ -d "$VIMDIR" ]
-				then
-					echo "Directory '$VIMDIR' exists, overwriting."
-					rm -r "$VIMDIR" || return 1
-				fi
-				git clone --recurse-submodules -j8 git@github.com:Jirixek/vim.git "$VIMDIR" || return 1
-				return 0
-			) || exit 2
-			shift
-			;;
-		-f)
-			shift
-			if [ -f "$1" ]
-			then
+		*)
+			if [ -z "$INSTALLFILE" ] && [ -f "$1" ]; then
 				INSTALLFILE="$1"
+			else
+				getHelp
 			fi
 			shift
 			;;
-		*)	getHelp ;;
 	esac
 done
 
