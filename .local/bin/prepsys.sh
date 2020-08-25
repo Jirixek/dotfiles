@@ -82,6 +82,12 @@ git_init () {
 	rm ~/.bash_login ~/.bash_profile || return 1
 }
 
+borg_init () {
+	BACKUP_PATH='/home/backup'
+	prompt_and_remove_path "$BACKUP_PATH"
+	sudo borg init --encryption=none "$BACKUP_PATH"
+}
+
 service_enable () {
 	# CUPS (printer)
 	# Suggestions in bash for unknown package
@@ -116,6 +122,7 @@ fi
 git_init                                         && \
 yay_install                                      && \
 "$HOME"/.local/bin/pkgupdate.sh "$INSTALLFILE"   && \
-service_enable                                   || exit 1
+service_enable                                   && \
+borg_init                                        || exit 1
 
 "$HOME"/.local/bin/linker.sh -w || exit 2

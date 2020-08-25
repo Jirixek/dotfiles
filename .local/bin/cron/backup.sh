@@ -4,11 +4,11 @@
 # Setting this, so the repo does not need to be given on the commandline:
 export BORG_REPO='/home/backup'
 
-# Setting this, so you won't be asked for your repository passphrase:
-export BORG_PASSPHRASE='D@ddyBackMeUp'
-
 # Location of log file
 export LOG_FILE='/var/log/borg/backup.log'
+
+# Check if log location exists
+mkdir -p /var/log/borg/
 
 # some helpers and error handling:
 info () {
