@@ -26,10 +26,9 @@ do
 	case "$1" in
 		-h|--help)	getHelp ;;
 		-t|--tlp)
-			{	sudo pacman -Syu tlp tlp-rdw      && \
-				sudo systemctl enable tlp.service NetworkManager-dispatcher.service      && \
-				sudo systemctl mask systemd-rfkill.service systemd-rfkill.socket
-			} || exit 1
+			sudo pacman -Syu --needed --noconfirm tlp tlp-rdw                     && \
+			sudo systemctl enable tlp.service NetworkManager-dispatcher.service   && \
+			sudo systemctl mask systemd-rfkill.service systemd-rfkill.socket      || exit 1
 			shift
 			;;
 		-v|--vim)
@@ -62,13 +61,12 @@ yay_install () {
 	pacman -Qq | grep -q yay && return 0
 	sudo pacman -Syu --needed --noconfirm git openssh || return 1
 	(
-	{	cd "$CURRENTFOLDER"                            && \
-		git clone https://aur.archlinux.org/yay.git    && \
-		cd yay                                         && \
-		makepkg -si                                    && \
-		cd ..                                          && \
-		rm -rf yay/
-	} || return 2
+	cd "$CURRENTFOLDER"                           && \
+	git clone https://aur.archlinux.org/yay.git   && \
+	cd yay                                        && \
+	makepkg -si --needed --noconfirm              && \
+	cd ..                                         && \
+	rm -rf yay/                                   || return 2
 	)
 	return $?
 }
@@ -115,10 +113,9 @@ then
 	exit 1
 fi
 
-{	git_init                                            && \
-	yay_install                                         && \
-	"$HOME"/.local/bin/pkgupdate.sh "$INSTALLFILE"      && \
-	service_enable
-} || exit 1
+git_init                                         && \
+yay_install                                      && \
+"$HOME"/.local/bin/pkgupdate.sh "$INSTALLFILE"   && \
+service_enable                                   || exit 1
 
 "$HOME"/.local/bin/linker.sh -w || exit 2

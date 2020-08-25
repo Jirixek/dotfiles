@@ -24,22 +24,21 @@ yayUninstall () {
 }
 
 filterMatches () {
-		sed -E '
-			/^bbswitch$/d;
-			/^bumblebee$/d;
-			/^intel-ucode$/d;
-			/^intel.*/d;
-			/^libva.*/d;
-			/^nvidia.*/d;
-			/^mesa.*/d;
-			/^tlp.*/d;
-			/^mathematica$/d;
-			/^ttf-ms.*$/d;
-			/^st$/d;
-			/^dwm$/d;
-			/^oracle-sqldeveloper$/d;
-			' "$1" || return 1
-		return 0
+	sed -E '
+		/^bbswitch$/d;
+		/^bumblebee$/d;
+		/^intel-ucode$/d;
+		/^intel.*/d;
+		/^libva.*/d;
+		/^nvidia.*/d;
+		/^mesa.*/d;
+		/^tlp.*/d;
+		/^mathematica$/d;
+		/^ttf-ms.*$/d;
+		/^st$/d;
+		/^dwm$/d;
+		/^oracle-sqldeveloper$/d;
+		' "$1"
 }
 
 [ ! -d "$(dirname "$hostnameFile")" ] && getHelp
