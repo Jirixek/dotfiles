@@ -26,17 +26,14 @@ f () {
 cc () {
 	# compile .c/.cpp file when changed
 	compileFile=''
-	for i
-	do
-		if [ -f "$i" ]
-		then
+	for i in "$@"; do
+		if [ -f "$i" ]; then
 			compileFile="$i"
 			break
 		fi
 	done
 
-	if [ -n "$compileFile" ]
-	then
+	if [ -n "$compileFile" ]; then
 		entr -c g++.sh -x "$@" <<<"$compileFile"
 	else
 		echo "Can't find file to keep watching" >&2
@@ -46,8 +43,7 @@ cc () {
 }
 
 cl () {
-	if [ ! -f "$1" ]
-	then
+	if [ ! -f "$1" ]; then
 		echo "Can't find file to keep watching" >&2
 		return 1
 	fi

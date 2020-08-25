@@ -2,10 +2,8 @@
 
 
 flag=0
-for file in "$@"
-do
-	if [ "$(archive-list "$file" | head -2 | wc -l)" -le 1 ]
-	then
+for file in "$@"; do
+	if [ "$(archive-list "$file" | head -2 | wc -l)" -le 1 ]; then
 		archive-extract-here "$file" || flag=1
 	else
 		archive-extract-to-dir "$file" || flag=1

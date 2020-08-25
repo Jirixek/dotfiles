@@ -14,17 +14,13 @@ case "$batteryStatus" in
 		batteryStatusIcon=''
 		;;
 	Discharging)
-		if [ "$batteryCapacity" -le 20 ]
-		then
+		if [ "$batteryCapacity" -le 20 ]; then
 			batteryStatusIcon=''
-		elif [ "$batteryCapacity" -le 40 ]
-		then
+		elif [ "$batteryCapacity" -le 40 ]; then
 			batteryStatusIcon=''
-		elif [ "$batteryCapacity" -le 60 ]
-		then
+		elif [ "$batteryCapacity" -le 60 ]; then
 			batteryStatusIcon=''
-		elif [ "$batteryCapacity" -le 80 ]
-		then
+		elif [ "$batteryCapacity" -le 80 ]; then
 			batteryStatusIcon=''
 		else
 			batteryStatusIcon=''
@@ -39,8 +35,7 @@ esac
 timeRemaining="$(acpi | grep -wvF '0%' | cut -d' ' -f5-)"
 
 printf '%s' "$batteryStatusIcon ${batteryCapacity}%"
-if [ -n "$timeRemaining" ]
-then
+if [ -n "$timeRemaining" ]; then
 	timeRemaining="$(echo "$timeRemaining" | sed -E 's/([[:digit:]]+):([[:digit:]]+):([[:digit:]]+).*/\1:\2/')"
 	printf ' %s' "$timeRemaining"
 fi

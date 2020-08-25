@@ -10,8 +10,7 @@ lf_check_filename "$1" "zip"
 set -f
 shift
 mkdir "$filename"
-for file in "$@"
-do
+for file in "$@"; do
 	ln "$file" "${filename}/"
 done
 zip -r "${filename}.zip" "${filename}/"

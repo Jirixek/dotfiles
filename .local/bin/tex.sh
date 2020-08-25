@@ -10,8 +10,7 @@ getHelp() {
 }
 
 compileFile=''
-if [ -f "$1" ]
-then
+if [ -f "$1" ]; then
 	compileFile="$1"
 else
 	getHelp

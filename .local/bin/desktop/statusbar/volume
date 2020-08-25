@@ -4,17 +4,13 @@
 alsa="$(amixer -D pulse sget Master | grep -E '[[:digit:]]+\%')"
 currentVolume="$(echo "$alsa" | sed -E 's/.*\[([[:digit:]]+)\%].*/\1/; q')"
 
-if [ "$currentVolume" -eq 0 ] || echo "$alsa" | grep -Fq 'off'
-then
+if [ "$currentVolume" -eq 0 ] || echo "$alsa" | grep -Fq 'off'; then
 	volumeStatusIcon=''
-elif [ "$currentVolume" -le 25 ]
-then
+elif [ "$currentVolume" -le 25 ]; then
 	volumeStatusIcon=''
-elif [ "$currentVolume" -le 55 ]
-then
+elif [ "$currentVolume" -le 55 ]; then
 	volumeStatusIcon=''
-elif [ "$currentVolume" -le 100 ]
-then
+elif [ "$currentVolume" -le 100 ]; then
 	volumeStatusIcon=''
 else
 	volumeStatusIcon=''

@@ -52,8 +52,7 @@ case "$1" in
 		exit 0
 		;;
 	*)
-		if [ -f "$1" ]
-		then
+		if [ -f "$1" ]; then
 			targetFile="$1"
 		else
 			getHelp

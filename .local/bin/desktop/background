@@ -1,8 +1,7 @@
 #!/bin/bash
 
 
-while :
-do
+while :; do
 	nitrogen --no-recurse --set-zoom-fill --head=0 --random "$HOME"/Pictures/Wallpapers/
 	nitrogen --no-recurse --set-zoom-fill --head=1 --random "$HOME"/Pictures/Wallpapers/
 	sleep $((60 * 15))

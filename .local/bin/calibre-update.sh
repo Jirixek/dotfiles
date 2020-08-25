@@ -9,8 +9,7 @@ remoteVersion=$(curl -s --insecure "$versionURL" | tr -d '.') || {
 	exit 1
 }
 
-if [ "$currentVersion" = '' ] || [ "$remoteVersion" -gt "$currentVersion" ]
-then
+if [ "$currentVersion" = '' ] || [ "$remoteVersion" -gt "$currentVersion" ]; then
 	# not installed or older version
 	sudo -v && wget -nv -O- 'https://download.calibre-ebook.com/linux-installer.sh' | sudo sh /dev/stdin
 else

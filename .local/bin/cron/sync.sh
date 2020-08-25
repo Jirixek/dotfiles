@@ -3,8 +3,7 @@
 # This script synchronizes and backups system with osync
 # Executed daily by anacron
 
-if [ "$(id -u)" -eq 0 ]
-then
+if [ "$(id -u)" -eq 0 ]; then
 	echo "This script is ment to be executed by normal user" >&2
 	exit 1
 fi
@@ -24,11 +23,9 @@ osync-batch.sh --path="$HOME"/.config/osync/gDrive
 gDriveExit=$?
 
 # check if running on the ethernet
-if nmcli device | grep -Eq 'ethernet[[:blank:]]+connected'
-then
+if nmcli device | grep -Eq 'ethernet[[:blank:]]+connected'; then
 	# ping on NAS
-	if ping -c 1 nas.lan &> /dev/null
-	then
+	if ping -c 1 nas.lan &> /dev/null; then
 		osync-batch.sh --path="$HOME"/.config/osync/backup
 		backupExit=$?
 	fi

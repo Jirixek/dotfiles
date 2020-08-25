@@ -1,8 +1,7 @@
 #!/bin/sh
 
 
-if [ "$(id -u)" -eq 0 ]
-then
+if [ "$(id -u)" -eq 0 ]; then
 	echo "Please don't run as root." >&2
 	exit 1
 fi
@@ -108,7 +107,7 @@ service_enable () {
 }
 
 # --------------
-#  INIT SECTION
+#  Init Section
 # --------------
 if [ -z "$INSTALLFILE" ]
 then

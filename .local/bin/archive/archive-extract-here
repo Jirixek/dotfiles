@@ -1,8 +1,7 @@
 #!/bin/sh
 
 
-for file in "$@"
-do
+for file in "$@"; do
 	case "$file" in
 		*.tar.bz2 | *.tbz2) tar -xvjf "$file" ;;
 		*.tar.gz | *.tgz) tar -xvzf "$file" ;;

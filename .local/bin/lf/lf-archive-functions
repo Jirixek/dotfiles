@@ -6,12 +6,10 @@
 
 
 lf_check_filename () {
-	if [ -z "$filename" ]
-	then
+	if [ -z "$filename" ]; then
 		lf -remote "send $id echoerr Error while creating an archive: invalid path"
 		exit 1
-	elif [ -e "$filename" ] || [ -e "${filename}.$2" ]
-	then
+	elif [ -e "$filename" ] || [ -e "${filename}.$2" ]; then
 		lf -remote "send $id echoerr Error while creating an archive: file exists"
 		exit 1
 	fi

@@ -1,8 +1,7 @@
 #!/bin/bash
 
 
-if [ "$(id -u)" -eq 0 ]
-then
+if [ "$(id -u)" -eq 0 ]; then
 	echo "Please don't run as root." >&2
 	exit 2
 fi
@@ -31,20 +30,16 @@ case "$1" in
 		find usr/ -type f -exec cp -v "{}" /"{}" \;
 
 		# Firefox
-		for dir in ~/.mozilla/firefox/*-release
-		do
-			if [ -d "$dir" ]
-			then
+		for dir in ~/.mozilla/firefox/*-release; do
+			if [ -d "$dir" ]; then
 				cp -v "$dir"/prefs.js home/.mozilla/firefox/release/
 				cp -rv "$dir"/chrome home/.mozilla/firefox/release/
 			fi
 		done
 
 		# Thunderbird
-		for dir in ~/.thunderbird/*-release
-		do
-			if [ -d "$dir" ]
-			then
+		for dir in ~/.thunderbird/*-release; do
+			if [ -d "$dir" ]; then
 				cp -v "$dir"/prefs.js home/.thunderbird/release/
 			fi
 		done
@@ -58,19 +53,15 @@ case "$1" in
 		sudo find usr/ -type f -exec cp -v "{}" /"{}" \;
 
 		# Firefox
-		for dir in ~/.mozilla/firefox/*-release
-		do
-			if [ -d "$dir" ]
-			then
+		for dir in ~/.mozilla/firefox/*-release; do
+			if [ -d "$dir" ]; then
 				cp -rv home/.mozilla/firefox/release/* "$dir"
 			fi
 		done
 
 		# Thunderbird
-		for dir in ~/.thunderbird/*-release
-		do
-			if [ -d "$dir" ]
-			then
+		for dir in ~/.thunderbird/*-release; do
+			if [ -d "$dir" ]; then
 				cp -v home/.thunderbird/release/* "$dir"
 			fi
 		done

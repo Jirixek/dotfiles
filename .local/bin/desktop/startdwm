@@ -1,7 +1,6 @@
 #!/bin/sh
 
 
-while :
-do
+while :; do
 	dwm 2> ~/.dwm.log
 done

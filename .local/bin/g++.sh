@@ -27,8 +27,7 @@ compile () {
 	       -std=c++17 -Wall -pedantic -Wno-long-long'
 	LIBS='-lpng'
 
-	if [ -f "$PWD/Makefile" ]
-	then
+	if [ -f "$PWD/Makefile" ]; then
 		make
 	else
 		[ "$memdebug" = 'true' ]     && FLAGS="$FLAGS -g -fsanitize=address"
@@ -46,15 +45,13 @@ compileFile=''
 executeFile=''
 testDir=''
 
-while [ "$#" -gt 0 ]
-do
+while [ "$#" -gt 0 ]; do
 	case "$1" in
 		-h)	getHelp ;;
 		-d)
 			# testdir
 			shift
-			if [ -d "$1" ]
-			then
+			if [ -d "$1" ]; then
 				testDir="$1"
 			else
 				echo "$1 is not a directory." >&2
@@ -83,10 +80,8 @@ do
 			shift
 			;;
 		*)
-			if [ -f "$1" ]
-			then
-				if [ "$compile" = 'false' ]
-				then
+			if [ -f "$1" ]; then
+				if [ "$compile" = 'false' ]; then
 					executeFile="$1"
 				else
 					compileFile="$1"
@@ -103,28 +98,22 @@ do
 	esac
 done
 
-if [ "$compile" = 'true' ] && [ ! -f "$compileFile" ]
-then
+if [ "$compile" = 'true' ] && [ ! -f "$compileFile" ]; then
 	echo "'$compileFile' is not a file." >&2
 	exit 1
 fi
 
-if [ "$compile" = 'false' ] && [ ! -x "$executeFile" ]
-then
+if [ "$compile" = 'false' ] && [ ! -x "$executeFile" ]; then
 	echo "'$executeFile' not executable." >&2
 	exit 1
 fi
 
-if [ "$execute" = 'false' ]
-then
+if [ "$execute" = 'false' ]; then
 	compile
-elif [ "$compile" = 'false' ] || compile
-then
-	if [ -d "$testDir" ]
-	then
+elif [ "$compile" = 'false' ] || compile; then
+	if [ -d "$testDir" ]; then
 		# unit tests
-		for i in "$testDir"/*_in.txt
-		do
+		for i in "$testDir"/*_in.txt; do
 			outCMP=$(echo "$i" | sed 's/_in\.txt$/_cmp.txt/')
 			outREF=$(echo "$i" | sed 's/_in\.txt$/_ref.txt/')
 
