@@ -1,4 +1,5 @@
 #!/bin/sh
+# TODO: sort out arguments
 # TODO: status bar
 
 # First arg: $id

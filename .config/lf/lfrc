@@ -286,10 +286,10 @@ map M middle
 map L low
 
 # Archives
-map az $lf_zip "$id" $fx
-map at $lf_tar "$id" $fx
-map ag $lf_targz "$id" $fx
-map ab $lf_tarbz2 "$id" $fx
+map az $lf-zip "$id" $fx
+map at $lf-tar "$id" $fx
+map ag $lf-targz "$id" $fx
+map ab $lf-tarbz2 "$id" $fx
 map x  $extract $fx
 
 map - dragon
