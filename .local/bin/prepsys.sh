@@ -1,12 +1,7 @@
 #!/bin/sh
 
 
-if [ "$(id -u)" -eq 0 ]; then
-	echo "Please don't run as root." >&2
-	exit 1
-fi
-
-getHelp() {
+get_help () {
 	echo "Usage: $(basename "$0") [OPTIONS] FILE"
 	echo "Configure system for optimal use"
 	echo "Supply FILE as a list of packages that you want to install"
@@ -16,30 +11,6 @@ getHelp() {
 	echo "-t, --tlp       Install tlp (laptop battery management system)"
 	exit 127
 }
-
-CURRENTFOLDER="$(dirname "$0")"
-INSTALLFILE=""
-
-while [ "$#" -gt 0 ]
-do
-	case "$1" in
-		-h|--help)	getHelp ;;
-		-t|--tlp)
-			sudo pacman -Syu --needed --noconfirm tlp tlp-rdw                     && \
-			sudo systemctl enable tlp.service NetworkManager-dispatcher.service   && \
-			sudo systemctl mask systemd-rfkill.service systemd-rfkill.socket      || exit 1
-			shift
-			;;
-		*)
-			if [ -z "$INSTALLFILE" ] && [ -f "$1" ]; then
-				INSTALLFILE="$1"
-			else
-				getHelp
-			fi
-			shift
-			;;
-	esac
-done
 
 yay_install () {
 	pacman -Qq | grep -q yay && return 0
@@ -60,7 +31,7 @@ prompt_and_remove_path () {
 		printf "%s exists, overwrite? [Y/n] " "$1"
 		read -r input
 		if [ -z "$input" ] || [ "${input,,}" = 'y' ]; then
-			rm -rf "$1"
+			sudo rm -rf "$1"
 		else
 			return 0
 		fi
@@ -108,14 +79,39 @@ service_enable () {
 	return $((root_exit > user_exit ? root_exit : user_exit))
 }
 
-# --------------
+# ---------------
 #  Init Section
-# --------------
-if [ -z "$INSTALLFILE" ]
-then
-	echo "please provide installation file."
+# ---------------
+if [ "$(id -u)" -eq 0 ]; then
+	echo "Please don't run as root." >&2
 	exit 1
 fi
+
+CURRENTFOLDER="$(dirname "$0")"
+INSTALLFILE=""
+
+while [ "$#" -gt 0 ]
+do
+	case "$1" in
+		-h|--help)	get_help ;;
+		-t|--tlp)
+			sudo pacman -Syu --needed --noconfirm tlp tlp-rdw                     && \
+			sudo systemctl enable tlp.service NetworkManager-dispatcher.service   && \
+			sudo systemctl mask systemd-rfkill.service systemd-rfkill.socket      || exit 1
+			shift
+			;;
+		*)
+			if [ -z "$INSTALLFILE" ] && [ -f "$1" ]; then
+				INSTALLFILE="$1"
+			else
+				get_help
+			fi
+			shift
+			;;
+	esac
+done
+
+[ -z "$INSTALLFILE" ] && get_help
 
 git_init                                         && \
 yay_install                                      && \
