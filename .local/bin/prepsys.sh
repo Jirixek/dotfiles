@@ -55,15 +55,29 @@ yay_install () {
 	return $?
 }
 
+prompt_and_remove_path () {
+	if [ -e "$1" ]; then
+		printf "%s exists, overwrite? [Y/n] " "$1"
+		read -r input
+		if [ -z "$input" ] || [ "${input,,}" = 'y' ]; then
+			rm -rf "$1"
+		else
+			return 0
+		fi
+	fi
+}
+
 git_init () {
-	[ -d ~/.dotfiles.git ] && return 0
-	sudo pacman -Syu --needed --noconfirm git || return 1
-	{	echo ".dotfiles.git" >> ~/.gitignore                                            && \
-		git clone --bare git@github.com:Jirixek/dotfiles.git ~/.dotfiles.git            && \
-		/usr/bin/git --git-dir="$HOME"/.dotfiles.git/ --work-tree="$HOME" checkout -f   && \
-		/usr/bin/git --git-dir="$HOME"/.dotfiles.git/ --work-tree="$HOME" config --local status.showUntrackedFiles no
-	} || return 2
-	rm ~/.bash_login ~/.bash_profile || return 1
+	sudo pacman -Syu --needed --noconfirm openssh git || return 1
+
+	REPO_PATH="$HOME/.dotfiles.git"
+	prompt_and_remove_path "$REPO_PATH"
+
+	# TODO: check ssh key
+	git clone --bare --recurse-submodules git@github.com:Jirixek/dotfiles.git "$REPO_PATH"     && \
+	git --git-dir="$REPO_PATH" --work-tree="$HOME" checkout -f                                 && \
+	git --git-dir="$REPO_PATH" --work-tree="$HOME" config --local status.showUntrackedFiles no || return 1
+	rm ~/.bash_login ~/.bash_profile || return 2
 }
 
 borg_init () {
