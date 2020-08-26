@@ -37,14 +37,28 @@ prompt_and_remove_path () {
 	fi
 }
 
+check_rsa () {
+	[ -f "$RSAPATH" ] && return
+	ssh-keygen -t rsa -b 4096 -C 'jirik.sz@gmail.com' -P '' -f "$RSAPATH"
+}
+
+github_key () {
+	cp "${RSAPATH}.pub" "${HOME}/add_to_github_rsa.pub"
+	[ -n "$NEWRSA" ] && printf '%s\n'                                                  \
+		"A copy of the rsa public key has been added to $HOME/add_to_github_rsa.pub" \
+		"Please add this key to github.com"
+}
+
 git_init () {
-	sudo pacman -Syu --needed --noconfirm openssh git || return 1
-
-	REPO_PATH="$HOME/.dotfiles.git"
-	prompt_and_remove_path "$REPO_PATH"
-
-	git --git-dir="$REPO_PATH" --work-tree="$HOME" config --local status.showUntrackedFiles no && \
-	rm ~/.bash_login ~/.bash_profile || return
+	REPO_PATH="${HOME}/.dotfiles.git"
+	sudo pacman -Syu --needed --noconfirm openssh git                                            && \
+	prompt_and_remove_path "$REPO_PATH"                                                          && \
+	git clone --bare --recurse-submodules https://github.com/Jirixek/dotfiles.git "$REPO_PATH"   && \
+	git --git-dir="$REPO_PATH" --work-tree="$HOME" checkout -f                                   && \
+	git --git-dir="$REPO_PATH" config --local status.showUntrackedFiles no                       && \
+	git --git-dir="$REPO_PATH" remote set-url origin git@github.com:Jirixek/dotfiles.git         && \
+	check_rsa                                                                                    && \
+	rm -f ~/.bash_login ~/.bash_profile                                                          || return
 }
 
 borg_init () {
@@ -84,6 +98,7 @@ if [ "$(id -u)" -eq 0 ]; then
 fi
 
 CURRENTFOLDER="$(dirname "$0")"
+RSAPATH="${HOME}/.ssh/id_rsa"
 INSTALLFILE=""
 
 while [ "$#" -gt 0 ]
@@ -114,4 +129,5 @@ yay_install                                      && \
 "$HOME"/.local/bin/pkgupdate.sh "$INSTALLFILE"   && \
 service_enable                                   && \
 borg_init                                        && \
-"$HOME"/.local/bin/linker.sh -w                  || exit
+"$HOME"/.local/bin/linker.sh -w                  && \
+github_key                                       || exit
