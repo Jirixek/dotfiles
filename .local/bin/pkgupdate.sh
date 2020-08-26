@@ -15,30 +15,28 @@ getHelp() {
 
 yayInstall () {
 	[ -n "$1" ] && echo "$1" | yay -Syu --needed -
-	return $?
 }
 
 yayUninstall () {
 	[ -n "$1" ] && echo "$1" | sudo pacman -Rnus -
-	return $?
 }
 
 filterMatches () {
 	sed -E '
-		/^bbswitch$/d;
-		/^bumblebee$/d;
-		/^intel-ucode$/d;
-		/^intel.*/d;
-		/^libva.*/d;
-		/^nvidia.*/d;
-		/^mesa.*/d;
-		/^tlp.*/d;
-		/^mathematica$/d;
-		/^ttf-ms.*$/d;
-		/^st$/d;
-		/^dwm$/d;
-		/^oracle-sqldeveloper$/d;
-		' "$1"
+	/^bbswitch$/d;
+	/^bumblebee$/d;
+	/^intel-ucode$/d;
+	/^intel.*/d;
+	/^libva.*/d;
+	/^nvidia.*/d;
+	/^mesa.*/d;
+	/^tlp.*/d;
+	/^mathematica$/d;
+	/^ttf-ms.*$/d;
+	/^st$/d;
+	/^dwm$/d;
+	/^oracle-sqldeveloper$/d;
+	' "$1"
 }
 
 [ ! -d "$(dirname "$hostnameFile")" ] && getHelp
@@ -48,7 +46,7 @@ case "$1" in
 	-h)	getHelp ;;
 	-g)
 		echo "$current_pkgs" > "$hostnameFile"
-		exit 0
+		exit
 		;;
 	*)
 		if [ -f "$1" ]; then
@@ -60,9 +58,9 @@ case "$1" in
 esac
 
 new_pkgs="$(comm -13 <(echo "$current_pkgs") <(filterMatches <(sort "$targetFile")))"
-yayInstall "$new_pkgs" || exit 1
+yayInstall "$new_pkgs" || exit
 
 # must regenerate it again (because of last command)
 current_pkgs="$(pacman -Qqe | sort)"
 old_pkgs="$(filterMatches <(comm -23 <(echo "$current_pkgs") <(sort "$targetFile")))"
-yayUninstall "$old_pkgs" || exit 1
+yayUninstall "$old_pkgs" || exit

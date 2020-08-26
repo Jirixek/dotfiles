@@ -4,7 +4,6 @@
 v () {
 	# disable <C-s> and <C-q> in $EDITOR
 	stty -ixon && "$EDITOR" "$@" && stty ixon
-	return 0
 }
 
 f () {
@@ -12,15 +11,14 @@ f () {
 	local tempfile
 	tempfile="$(mktemp)" || {
 		echo "Can't create tmpfile" >&2
-		return 2
+		return 1
 	}
 	lf -last-dir-path="$tempfile" "$@"
-	[ ! -f "$tempfile" ] && return 2
+	[ ! -f "$tempfile" ] && return 1
 
 	dir="$(cat "$tempfile")"
 	rm -f "$tempfile"
-	[ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir" || return 1
-	return 0
+	[ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir" || return
 }
 
 cc () {
@@ -39,7 +37,6 @@ cc () {
 		echo "Can't find file to keep watching" >&2
 		return 1
 	fi
-	return 0
 }
 
 cl () {
@@ -49,22 +46,18 @@ cl () {
 	fi
 
 	printf '%s\n' "$@" | entr -rc tex.sh "$1"
-
-	return 0
 }
 
 fs () {
 	local TARGETDIR="$HOME/.local/bin/"
-	cd "$TARGETDIR" || return 1
+	cd "$TARGETDIR" || return
 	local TARGET=''
 	TARGET="$(find . -name '[^.]*' -type f | sed 's|^\./||' | fzf)" && "$EDITOR" "$TARGET"
-	return 0
 }
 
 fk () {
 	local TARGETDIR="$HOME/Documents/cvut/"
-	cd "$TARGETDIR" || return 1
+	cd "$TARGETDIR" || return
 	local TARGET=''
 	TARGET="${TARGETDIR}$(find "$TARGETDIR" -mindepth 1 -maxdepth 1 -type d -name '[^.]*' -printf '%f\n' | fzf)" && "$FILE" "$TARGET"
-	return 0
 }

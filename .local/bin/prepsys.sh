@@ -13,17 +13,16 @@ get_help () {
 }
 
 yay_install () {
-	pacman -Qq | grep -q yay && return 0
-	sudo pacman -Syu --needed --noconfirm git openssh || return 1
+	pacman -Qq | grep -q yay && return
+	sudo pacman -Syu --needed --noconfirm git openssh || return
 	(
 	cd "$CURRENTFOLDER"                           && \
 	git clone https://aur.archlinux.org/yay.git   && \
 	cd yay                                        && \
 	makepkg -si --needed --noconfirm              && \
 	cd ..                                         && \
-	rm -rf yay/                                   || return 2
+	rm -rf yay/                                   || return
 	)
-	return $?
 }
 
 prompt_and_remove_path () {
@@ -33,7 +32,7 @@ prompt_and_remove_path () {
 		if [ -z "$input" ] || [ "${input,,}" = 'y' ]; then
 			sudo rm -rf "$1"
 		else
-			return 0
+			return 1
 		fi
 	fi
 }
@@ -44,16 +43,13 @@ git_init () {
 	REPO_PATH="$HOME/.dotfiles.git"
 	prompt_and_remove_path "$REPO_PATH"
 
-	# TODO: check ssh key
-	git clone --bare --recurse-submodules git@github.com:Jirixek/dotfiles.git "$REPO_PATH"     && \
-	git --git-dir="$REPO_PATH" --work-tree="$HOME" checkout -f                                 && \
-	git --git-dir="$REPO_PATH" --work-tree="$HOME" config --local status.showUntrackedFiles no || return 1
-	rm ~/.bash_login ~/.bash_profile || return 2
+	git --git-dir="$REPO_PATH" --work-tree="$HOME" config --local status.showUntrackedFiles no && \
+	rm ~/.bash_login ~/.bash_profile || return
 }
 
 borg_init () {
 	BACKUP_PATH='/home/backup'
-	prompt_and_remove_path "$BACKUP_PATH"
+	prompt_and_remove_path "$BACKUP_PATH" || return
 	sudo borg init --encryption=none "$BACKUP_PATH"
 }
 
@@ -97,7 +93,7 @@ do
 		-t|--tlp)
 			sudo pacman -Syu --needed --noconfirm tlp tlp-rdw                     && \
 			sudo systemctl enable tlp.service NetworkManager-dispatcher.service   && \
-			sudo systemctl mask systemd-rfkill.service systemd-rfkill.socket      || exit 1
+			sudo systemctl mask systemd-rfkill.service systemd-rfkill.socket      || exit
 			shift
 			;;
 		*)
@@ -117,6 +113,5 @@ git_init                                         && \
 yay_install                                      && \
 "$HOME"/.local/bin/pkgupdate.sh "$INSTALLFILE"   && \
 service_enable                                   && \
-borg_init                                        || exit 1
-
-"$HOME"/.local/bin/linker.sh -w || exit 2
+borg_init                                        && \
+"$HOME"/.local/bin/linker.sh -w                  || exit

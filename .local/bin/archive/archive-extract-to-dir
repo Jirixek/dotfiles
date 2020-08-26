@@ -12,5 +12,5 @@ for file in "$@"; do
 		cd .. || { echo "Error: cannot leave '$NEWDIR'" >&2; exit 1; }
 		rm -rf "$NEWDIR" || { echo "Error: cannot remove $NEWDIR" >&2; exit 1; }
 	fi
-	) || exit 1
+	) || exit
 done
