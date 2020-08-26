@@ -124,10 +124,10 @@ done
 
 [ -z "$INSTALLFILE" ] && get_help
 
-git_init                                         && \
-yay_install                                      && \
-"$HOME"/.local/bin/pkgupdate.sh "$INSTALLFILE"   && \
-service_enable                                   && \
-borg_init                                        && \
-"$HOME"/.local/bin/linker.sh -w                  && \
-github_key                                       || exit
+git_init                                                     && \
+yay_install                                                  && \
+"$HOME"/.local/bin/pkgupdate.sh "$INSTALLFILE" --noconfirm   && \
+service_enable                                               && \
+borg_init                                                    && \
+"$HOME"/.local/bin/linker.sh -w                              && \
+github_key                                                   || exit

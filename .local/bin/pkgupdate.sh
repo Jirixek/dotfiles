@@ -14,7 +14,7 @@ getHelp() {
 }
 
 yayInstall () {
-	[ -n "$1" ] && echo "$1" | yay -Syu --needed -
+	[ -n "$1" ] && echo "$1" | yay -Syu --needed $install_flags -
 }
 
 yayUninstall () {
@@ -42,20 +42,29 @@ filterMatches () {
 [ ! -d "$(dirname "$hostnameFile")" ] && getHelp
 
 current_pkgs="$(pacman -Qqe | sort)"
-case "$1" in
-	-h)	getHelp ;;
-	-g)
-		echo "$current_pkgs" > "$hostnameFile"
-		exit
-		;;
-	*)
-		if [ -f "$1" ]; then
-			targetFile="$1"
-		else
-			getHelp
-		fi
-		;;
-esac
+install_flags=''
+while [ "$#" -gt 0 ]
+do
+	case "$1" in
+		-h)	getHelp ;;
+		-g)
+			echo "$current_pkgs" > "$hostnameFile"
+			exit
+			;;
+		--noconfirm)
+			install_flags="$install_flags $1"
+			shift
+			;;
+		*)
+			if [ -f "$1" ]; then
+				targetFile="$1"
+			else
+				getHelp
+			fi
+			shift
+			;;
+	esac
+done
 
 new_pkgs="$(comm -13 <(echo "$current_pkgs") <(filterMatches <(sort "$targetFile")))"
 yayInstall "$new_pkgs" || exit
