@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 
 # Created by Jiri Szkandera
@@ -21,18 +21,18 @@ getHelp() {
 }
 
 compile () {
-	FLAGS='-Wextra -Wformat-nonliteral -Wpointer-arith
+	FLAGS=(-Wextra -Wformat-nonliteral -Wpointer-arith
 	       -Winline -Wundef -Wno-unused-parameter -Wcast-qual
 	       -Wwrite-strings -Wcast-align -Wfloat-equal
-	       -std=c++17 -Wall -pedantic -Wno-long-long'
-	LIBS='-lpng'
+		 -std=c++17 -Wall -pedantic -Wno-long-long)
+	LIBS=(-lpng)
 
 	if [ -f "$PWD/Makefile" ]; then
 		make
 	else
-		[ "$memdebug" = 'true' ]     && FLAGS="$FLAGS -g -fsanitize=address"
-		[ "$optimization" = 'true' ] && FLAGS="$FLAGS -O2"
-		g++ $FLAGS "$compileFile" -o "$executeFile" $LIBS
+		[ "$memdebug" = 'true' ]     && FLAGS=("${FLAGS[@]}" "-g" "-fsanitize=address")
+		[ "$optimization" = 'true' ] && FLAGS=("${FLAGS[@]}" "-O2")
+		g++ "${FLAGS[@]}" "$compileFile" -o "$executeFile" "${LIBS[@]}"
 	fi
 }
 

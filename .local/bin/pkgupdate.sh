@@ -14,7 +14,7 @@ getHelp() {
 }
 
 yayInstall () {
-	[ -n "$1" ] && echo "$1" | yay -Syu --needed $install_flags -
+	[ -n "$1" ] && echo "$1" | yay -Syu --needed "${install_flags[@]}" -
 }
 
 yayUninstall () {
@@ -42,9 +42,8 @@ filterMatches () {
 [ ! -d "$(dirname "$hostnameFile")" ] && getHelp
 
 current_pkgs="$(pacman -Qqe | sort)"
-install_flags=''
-while [ "$#" -gt 0 ]
-do
+install_flags=()
+while [ "$#" -gt 0 ]; do
 	case "$1" in
 		-h)	getHelp ;;
 		-g)
@@ -52,7 +51,7 @@ do
 			exit
 			;;
 		--noconfirm)
-			install_flags="$install_flags $1"
+			install_flags=("${install_flags[@]}" "$1")
 			shift
 			;;
 		*)
