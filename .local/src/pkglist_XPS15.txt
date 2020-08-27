@@ -106,6 +106,7 @@ pacman
 par
 patch
 pavucontrol
+perl-file-mimeinfo
 picom
 pkgconf
 pkgfile

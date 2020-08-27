@@ -11,6 +11,7 @@ export HISTFILESIZE=10000
 export HISTCONTROL=erasedups
 
 # Default programs:
+export OPENER='mimeopen'
 export EDITOR='nvim'
 export VISUAL='nvim'
 export SUDO_EDITOR='nvim'
