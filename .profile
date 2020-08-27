@@ -10,7 +10,7 @@ export HISTSIZE=10000
 export HISTFILESIZE=10000
 export HISTCONTROL=erasedups
 
-# Default programs:
+# Default programs
 export OPENER='mimeopen'
 export EDITOR='nvim'
 export VISUAL='nvim'
@@ -20,7 +20,7 @@ export BROWSER='firefox'
 export READER='evince'
 export FILE='f'
 
-# ~/ Clean-up:
+# ~/ Clean-up
 export GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc-2.0"
 # export GTK_THEME='Adwaita:dark'
 export LESSHISTFILE='-'
@@ -31,7 +31,7 @@ export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 export XINITRC="$XDG_CONFIG_HOME"/X11/xinitrc
 
-# Other program settings:
+# Other program settings
 export FZF_DEFAULT_OPTS='--layout=reverse --height 40%'
 export LESS='-R'
 export LESS_TERMCAP_mb='[1;31m'
@@ -42,7 +42,7 @@ export LESS_TERMCAP_se='[0m'
 export LESS_TERMCAP_us='[1;32m'
 export LESS_TERMCAP_ue='[0m'
 
-# Kvuli SQLdeveloperu
+# JAVA settings
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 # Git
