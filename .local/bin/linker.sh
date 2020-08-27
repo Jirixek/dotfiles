@@ -27,7 +27,7 @@ cd "$CURRENTFOLDER"/../src || {
 case "$1" in
 	-r)
 		find etc/ -type f -exec cp -v /"{}" "{}" \;
-		find usr/ -type f -exec cp -v "{}" /"{}" \;
+		find usr/ -type f -exec cp -v /"{}" "{}" \;
 
 		# Firefox
 		for dir in ~/.mozilla/firefox/*-release; do
