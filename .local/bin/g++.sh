@@ -114,8 +114,8 @@ elif [ "$compile" = 'false' ] || compile; then
 	if [ -d "$testDir" ]; then
 		# unit tests
 		for i in "$testDir"/*_in.txt; do
-			outCMP=$(echo "$i" | sed 's/_in\.txt$/_cmp.txt/')
-			outREF=$(echo "$i" | sed 's/_in\.txt$/_ref.txt/')
+			outCMP="${i%_in.txt}_cmp.txt"
+			outREF="${i%_in.txt}_ref.txt"
 
 			/usr/bin/time --quiet -f "$i\t\tuser: %U s\tmemory: %M kB" ./"$executeFile" "$@" < "$i" > "$outCMP"
 			diff --color="always" "$outCMP" "$outREF"
