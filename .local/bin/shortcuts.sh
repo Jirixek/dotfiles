@@ -18,17 +18,14 @@ f () {
 
 	dir="$(cat "$tempfile")"
 	rm -f "$tempfile"
-	[ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir" || return
+	[ -d "$dir" ] && [ "$dir" != "$PWD" ] && cd "$dir" || return
 }
 
 cc () {
 	# compile .c/.cpp file when changed
 	compileFile=''
 	for i in "$@"; do
-		if [ -f "$i" ]; then
-			compileFile="$i"
-			break
-		fi
+		[ -f "$i" ] && compileFile="$i" && break
 	done
 
 	if [ -n "$compileFile" ]; then
