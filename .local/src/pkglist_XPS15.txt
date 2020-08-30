@@ -23,8 +23,6 @@ cronie
 ctags
 cups
 dash
-discord
-dmenu-git
 docker
 doxygen
 dragon-drag-and-drop
