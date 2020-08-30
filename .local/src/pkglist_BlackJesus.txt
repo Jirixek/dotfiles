@@ -49,6 +49,7 @@ gpick
 grep
 groff
 grub
+gvfs
 gzip
 haveged
 htop
