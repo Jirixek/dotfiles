@@ -310,7 +310,7 @@ cmap <down> cmd-history-next
 #  Directory mapping
 # ===================
 # Root
-map g/  cd /
+map gR  cd /
 map ge  cd /etc/
 map gH  cd /home/
 
@@ -320,7 +320,7 @@ map gmM cd /mnt/mrdky/Movies/
 map gmn cd /mnt/nas/
 map gmw cd /mnt/windows/
 
-map gr  %[ -d /run/media/"$USER"/ ] && lf -remote "send $id cd /run/media/$USER/"
+map gr  %lf -remote "send $id cd /run/media/$USER/"
 
 map gv. cd /var/
 map gvl cd /var/lib/lxc/

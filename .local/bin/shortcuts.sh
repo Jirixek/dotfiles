@@ -48,16 +48,15 @@ cl () {
 	printf '%s\n' "$@" | entr -rc tex.sh "$1"
 }
 
-fs () {
-	local TARGETDIR="$HOME/.local/bin/"
-	cd "$TARGETDIR" || return
-	local TARGET=''
-	TARGET="$(find . -name '[^.]*' -type f | sed 's|^\./||' | fzf)" && "$EDITOR" "$TARGET"
-}
-
-fk () {
-	local TARGETDIR="$HOME/Documents/cvut/"
-	cd "$TARGETDIR" || return
-	local TARGET=''
-	TARGET="${TARGETDIR}$(find "$TARGETDIR" -mindepth 1 -maxdepth 1 -type d -name '[^.]*' -printf '%f\n' | fzf)" && "$FILE" "$TARGET"
+fzf_mapping () {
+	cd "$1" || return
+	SELECTED="$(find "$1" -mindepth 1 -maxdepth 1 -printf '%f\n' | sort | fzf)" || return
+	FILE_TYPE="$(mimetype -ab "$SELECTED")"
+	if grep -q 'text/plain' <<<"$FILE_TYPE"; then
+		"$EDITOR" "$SELECTED"
+	elif grep -qe 'inode' <<<"$FILE_TYPE"; then
+		"$FILE" "$SELECTED"
+	else
+		"$OPENER" "$SELECTED"
+	fi
 }
