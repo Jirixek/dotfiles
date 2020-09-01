@@ -4,13 +4,13 @@
 for file in "$@"; do
 	(
 	NEWDIR="$(basename "$file" | sed -E 's/\..+//')"
-	mkdir "$NEWDIR" || { echo "Error: cannot create '$NEWDIR'" >&2; exit 1; }
-	cd "$NEWDIR" || { echo "Error: cannot enter '$NEWDIR'" >&2; exit 1; }
+	mkdir "$NEWDIR" || exit
+	cd "$NEWDIR" || exit
 
 	if ! archive-extract-here "$file"
 	then
-		cd .. || { echo "Error: cannot leave '$NEWDIR'" >&2; exit 1; }
-		rm -rf "$NEWDIR" || { echo "Error: cannot remove $NEWDIR" >&2; exit 1; }
+		cd ../ || exit
+		rm -rf "$NEWDIR" || exit
 	fi
 	) || exit
 done
