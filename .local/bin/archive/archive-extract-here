@@ -9,7 +9,7 @@ for file in "$@"; do
 		*.bz2) bunzip2 "$file" ;;
 		*.gz) gunzip "$file" ;;
 		*.rar) unrar "$file" ;;
-		*.zip) unzip -d "$file" ;;
+		*.zip) unzip "$file" ;;
 		*.Z) uncompress "$file" ;;
 		*.7z) 7z "$file" ;;
 		*)
