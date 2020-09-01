@@ -1,11 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
 
-. lf-archive-functions
-
-lf_get_filename
-lf_check_filename "$1" "tar.gz"
-
-set -f
-shift
-tar --transform="s|.*/\([^/]*\)|${filename}/\1|" -cvzf "${filename}.tar.gz" "$@"
+suffix='tar.gz'
+. lf-archive-setup "$@" || exit
+tar --transform="s|.*/\([^/]*\)|${archive_name}/\1|" -cvzf "${archive_name}.${suffix}" "${files[@]}"

@@ -1,17 +1,17 @@
-#!/bin/sh
+#!/bin/bash
 
 
-. lf-archive-functions
+cleanup () {
+	rm -rf "${archive_name}"
+	exit
+}
 
-# This sets variable 'filename'
-lf_get_filename
-lf_check_filename "$1" "zip"
+suffix='zip'
+. lf-archive-setup "$@" || exit
 
-set -f
-shift
-mkdir "$filename"
-for file in "$@"; do
-	ln "$file" "${filename}/"
+mkdir "$archive_name" || exit
+for file in "${files[@]}"; do
+	ln -s "$file" "${archive_name}/" || cleanup
 done
-zip -r "${filename}.zip" "${filename}/"
-rm -rf "${filename}/"
+zip -r "${archive_name}.${suffix}" "${archive_name}"
+cleanup

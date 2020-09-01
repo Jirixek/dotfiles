@@ -1,0 +1,27 @@
+#!/bin/bash
+# TODO: status bar
+
+# First argument: $id
+# Other arguments: $fx
+
+
+lf_check_archive_name () {
+	id="$1"
+	suffix="$2"
+	archive_name="$3"
+	if [ -z "$archive_name" ]; then
+		lf -remote "send $id echoerr Error while creating an archive: empty path"
+		return 1
+	elif [ -e "$archive_name" ] || [ -e "${archive_name}.${suffix}" ]; then
+		lf -remote "send $id echoerr Error while creating an archive: file exists"
+		return 1
+	fi
+}
+
+id="$1"
+shift
+files=("$@") # the rest of the arguments are the files to be archived
+
+read -rp 'File name: ' archive_name
+lf_check_archive_name "$id" "$suffix" "$archive_name" || exit
+set -f
