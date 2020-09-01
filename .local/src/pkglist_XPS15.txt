@@ -31,7 +31,6 @@ efibootmgr
 entr
 eog
 ethtool
-evince
 fakeroot
 file
 findutils
@@ -49,7 +48,6 @@ gpick
 grep
 groff
 grub
-gvfs
 gzip
 haveged
 highlight
@@ -96,6 +94,7 @@ noto-fonts-emoji
 npm
 ntfs-3g
 numlockx
+okular
 oomox
 openssh
 openvpn

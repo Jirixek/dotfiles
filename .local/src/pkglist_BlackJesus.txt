@@ -30,7 +30,6 @@ efibootmgr
 entr
 eog
 ethtool
-evince
 fakeroot
 file
 findutils
@@ -49,7 +48,6 @@ gpick
 grep
 groff
 grub
-gvfs
 gzip
 haveged
 htop
@@ -94,6 +92,7 @@ ntfs-3g
 numlockx
 nvidia
 nvidia-settings
+okular
 oomox
 openssh
 openvpn
