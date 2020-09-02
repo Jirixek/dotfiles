@@ -95,7 +95,6 @@ npm
 ntfs-3g
 numlockx
 okular
-oomox
 openssh
 openvpn
 os-prober
@@ -145,6 +144,7 @@ texlive-pictures
 texlive-pstricks
 texlive-publishers
 texlive-science
+themix-full-git
 thunderbird
 time
 tlp
