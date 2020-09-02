@@ -113,6 +113,7 @@ profile-sync-daemon
 pulseaudio-alsa
 python-pystache
 qbittorrent
+qt5ct
 redshift
 resvg
 rng-tools

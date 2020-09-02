@@ -56,3 +56,6 @@ export MAKEFLAGS="-j$(nproc)"
 
 # CppUTest
 export CPPUTEST_HOME="$HOME/.local/cpputest"
+
+# Qt5 theme
+export QT_QPA_PLATFORMTHEME=qt5ct
