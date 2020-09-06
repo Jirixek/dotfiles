@@ -7,12 +7,8 @@
 source /usr/share/git/completion/git-prompt.sh
 
 PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \[\033[01;33m\]$(__git_ps1 "[%s]")\[\033[01;34m\]\$\[\033[00m\] '
-if [ ${EUID} -eq 0 ]
-then
+if [ ${EUID} -eq 0 ]; then
 	PS1='\[\033[01;31m\]\h\[\033[01;34m\] \W \$\[\033[00m\] '
-elif [ -n "$RANGER_LEVEL" ]
-then
-	PS1="[r] $PS1"
 fi
 
 # searching repos for unnamed commands
