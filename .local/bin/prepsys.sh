@@ -58,7 +58,7 @@ git_init () {
 	git --git-dir="$REPO_PATH" config --local status.showUntrackedFiles no                       && \
 	git --git-dir="$REPO_PATH" remote set-url origin git@github.com:Jirixek/dotfiles.git         && \
 	check_rsa                                                                                    && \
-	rm -f ~/.bash_login ~/.bash_profile                                                          || return
+	rm -f ~/.bash_login                                                                          || return
 }
 
 borg_init () {
