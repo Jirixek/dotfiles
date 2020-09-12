@@ -152,6 +152,7 @@ time
 tlp
 tlp-rdw
 tmux
+tmuxinator
 ttf-font-awesome
 ttf-joypixels
 ttf-ms-win10
