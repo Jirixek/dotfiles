@@ -60,7 +60,7 @@ j4-dmenu-desktop
 jack2
 java8-openjfx
 kitty
-lf
+lf-git
 libnma
 libreoffice-still
 libtool
