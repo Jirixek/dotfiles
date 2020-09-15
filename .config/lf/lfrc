@@ -15,7 +15,7 @@ set globsearch on
 set tabstop 6 # Tabwidth
 set preview true
 set previewer ~/.config/lf/preview
-set period 1 # Periodic loading
+# set period 1 # Periodic loading
 set incsearch on
 
 # ===========
