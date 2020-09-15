@@ -48,6 +48,8 @@ gpick
 grep
 groff
 grub
+gst-plugins-bad
+gst-plugins-good
 gzip
 haveged
 highlight
