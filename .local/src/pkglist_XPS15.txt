@@ -105,8 +105,10 @@ pacman
 par
 patch
 pavucontrol
+pbzip2
 perl-file-mimeinfo
 picom
+pigz
 pkgconf
 pkgfile
 profile-sync-daemon
