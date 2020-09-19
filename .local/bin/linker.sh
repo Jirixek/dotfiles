@@ -16,11 +16,11 @@ getHelp() {
 	exit 127
 }
 
-CURRENTFOLDER=$(dirname "$0")
+CURRENTFOLDER="$(dirname "$0")"
 
 (
 cd "$CURRENTFOLDER"/../src || {
-	echo "Can't enter $HOME/.local/src" >&2
+	echo "Can't enter ${HOME}/.local/src" >&2
 	exit 1
 }
 

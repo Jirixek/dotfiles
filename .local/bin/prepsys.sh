@@ -45,7 +45,7 @@ check_rsa () {
 github_key () {
 	cp "${RSAPATH}.pub" "${HOME}/add_to_github_rsa.pub"
 	[ -n "$NEWRSA" ] && printf '%s\n'                                                  \
-		"A copy of the rsa public key has been added to $HOME/add_to_github_rsa.pub" \
+		"A copy of the rsa public key has been added to ${HOME}/add_to_github_rsa.pub" \
 		"Please add this key to github.com"
 }
 

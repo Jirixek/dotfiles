@@ -4,7 +4,7 @@
 # Created by Jiri Szkandera
 # Compile .c/.cpp program and execute unit tests accordingly
 
-prg=$(basename "$0")
+prg="$(basename "$0")"
 
 getHelp() {
 	echo "Usage: $prg [OPTIONS] [FILE]"

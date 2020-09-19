@@ -4,7 +4,7 @@
 versionURL='https://code.calibre-ebook.com/latest'
 
 currentVersion="$(calibre-debug -c 'import calibre; print (calibre.__version__)' | tr -d '.')"
-remoteVersion=$(curl -s --insecure "$versionURL" | tr -d '.') || {
+remoteVersion="$(curl -s --insecure "$versionURL" | tr -d '.')" || {
 	echo "Unable to reach '$versionURL'" >&2
 	exit 1
 }

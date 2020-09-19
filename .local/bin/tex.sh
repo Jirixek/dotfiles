@@ -1,7 +1,7 @@
 #!/bin/sh
 
 
-prg=$(basename "$0")
+prg="$(basename "$0")"
 
 getHelp() {
 	echo "Usage: $prg [.tex file]"
