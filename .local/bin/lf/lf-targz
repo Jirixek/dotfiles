@@ -3,4 +3,5 @@
 
 suffix='tar.gz'
 . lf-archive-setup "$@" || exit
-tar --transform="s|.*/\([^/]*\)|${archive_name}/\1|" -cvzf "${archive_name}.${suffix}" "${files[@]}"
+tar --transform="s|${PWD#/}/\(.*\)|${archive_name}/\1|" --use-compress-program='pigz' \
+	-cvf "${archive_name}.${suffix}" "${files[@]}"

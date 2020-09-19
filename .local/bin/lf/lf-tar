@@ -3,4 +3,5 @@
 
 suffix='tar'
 . lf-archive-setup "$@" || exit
-tar --transform="s|.*/\([^/]*\)|${archive_name}/\1|" -cvf "${archive_name}.${suffix}" "${files[@]}"
+tar --transform="s|${PWD#/}/\(.*\)|${archive_name}/\1|" \
+	-cvf "${archive_name}.${suffix}" "${files[@]}"

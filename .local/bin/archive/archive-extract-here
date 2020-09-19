@@ -5,9 +5,11 @@ for file in "$@"; do
 	case "$file" in
 		*.tar.bz2 | *.tbz2) tar -xvjf "$file" ;;
 		*.tar.gz | *.tgz) tar -xvzf "$file" ;;
+		*.tar.xz) tar -xvJf "$file" ;;
 		*.tar) tar -xvf "$file" ;;
-		*.bz2) bunzip2 "$file" ;;
-		*.gz) gunzip "$file" ;;
+		*.bz2) pbzip2 -d "$file" ;;
+		*.gz) unpigz "$file" ;;
+		*.xz) unxz --threads=0 "$file" ;;
 		*.rar) unrar "$file" ;;
 		*.zip) unzip "$file" ;;
 		*.Z) uncompress "$file" ;;
