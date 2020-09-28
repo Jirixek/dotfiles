@@ -14,3 +14,4 @@ command -v kitty &>/dev/null && . <(kitty + complete setup bash)
 
 [ -f ~/.bash_aliases ]           && . "${HOME}/.bash_aliases"
 [ -f ~/.local/bin/shortcuts.sh ] && . "${HOME}/.local/bin/shortcuts.sh"
+[ -f /opt/miniconda3/etc/profile.d/conda.sh ] && . /opt/miniconda3/etc/profile.d/conda.sh

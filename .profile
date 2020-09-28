@@ -58,3 +58,6 @@ export CPPUTEST_HOME="${HOME}/.local/cpputest"
 
 # Qt5 theme
 export QT_QPA_PLATFORMTHEME=qt5ct
+
+# Conda
+export CONDARC="${HOME}/.config/conda/condarc"
