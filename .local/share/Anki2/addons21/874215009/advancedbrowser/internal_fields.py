@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 # See github page to report issues or to contribute:
 # https://github.com/hssm/advanced-browser
-from anki.lang import _
 from anki.cards import Card
-from anki.lang import _
-from anki.utils import intTime, splitFields
-from aqt.utils import askUser, showWarning
-
 from anki.consts import *
-
+from anki.hooks import addHook, remHook
+from anki.lang import _
+from anki.utils import intTime
+from aqt.utils import askUser
 
 
 class InternalFields:
@@ -58,7 +56,7 @@ class InternalFields:
         cc = advBrowser.newCustomColumn(
             type="nid",
             name="Note ID",
-            onData=lambda c, n, t: n.id,
+            onData=lambda c, n, t: str(n.id),
             onSort=lambda: "n.id",
             setData=setData,
         )
@@ -75,7 +73,7 @@ class InternalFields:
         cc = advBrowser.newCustomColumn(
             type="nguid",
             name="Note Guid",
-            onData=lambda c, n, t: n.guid,
+            onData=lambda c, n, t: str(n.guid),
             onSort=lambda: "n.guid",
             setData=setData,
         )
@@ -84,7 +82,7 @@ class InternalFields:
         cc = advBrowser.newCustomColumn(
             type="nmid",
             name="Model ID",
-            onData=lambda c, n, t: n.mid,
+            onData=lambda c, n, t: str(n.mid),
             onSort=lambda: "n.mid"
         )
         self.noteColumns.append(cc)
@@ -99,7 +97,7 @@ class InternalFields:
         cc = advBrowser.newCustomColumn(
             type="nusn",
             name="Note USN",
-            onData=lambda c, n, t: n.usn,
+            onData=lambda c, n, t: str(n.usn),
             onSort=lambda: "n.usn",
             setData=setData,
         )
@@ -158,7 +156,7 @@ class InternalFields:
         cc = advBrowser.newCustomColumn(
             type="cid",
             name="Card ID",
-            onData=lambda c, n, t: c.id,
+            onData=lambda c, n, t: str(c.id),
             onSort=lambda: "c.id",
             setData=setData,
         )
@@ -191,7 +189,7 @@ class InternalFields:
         cc = advBrowser.newCustomColumn(
             type="cdid",
             name="Deck ID",
-            onData=lambda c, n, t: c.did,
+            onData=lambda c, n, t: str(c.did),
             onSort=lambda: "c.did",
             setData=setData,
         )
@@ -212,7 +210,7 @@ class InternalFields:
         cc = advBrowser.newCustomColumn(
             type="codid",
             name="Original Deck ID",
-            onData=lambda c, n, t: c.odid,
+            onData=lambda c, n, t: str(c.odid),
             onSort=lambda: "c.odid",
             setData=setData,
         )
@@ -238,7 +236,7 @@ class InternalFields:
         cc = advBrowser.newCustomColumn(
             type="cord",
             name="Card Ordinal",
-            onData=lambda c, n, t: c.ord,
+            onData=lambda c, n, t: str(c.ord),
             onSort=lambda: "c.ord",
             setData=setData,
         )
@@ -254,7 +252,7 @@ class InternalFields:
         cc = advBrowser.newCustomColumn(
             type="cusn",
             name="Card USN",
-            onData=lambda c, n, t: c.usn,
+            onData=lambda c, n, t: str(c.usn),
             onSort=lambda: "c.usn",
             setData=setData,
         )
@@ -335,7 +333,7 @@ class InternalFields:
         cc = advBrowser.newCustomColumn(
             type="cleft",
             name="Card Left",
-            onData=lambda c, n, t: c.left,
+            onData=lambda c, n, t: str(c.left),
             onSort=lambda: "c.left",
             setData=setData,
         )
@@ -355,7 +353,7 @@ class InternalFields:
         cc = advBrowser.newCustomColumn(
             type="codue",
             name="Card Original Due",
-            onData=lambda c, n, t: c.odue,
+            onData=lambda c, n, t: str(c.odue),
             onSort=lambda: "c.odue",
             setData=setData,
         )
