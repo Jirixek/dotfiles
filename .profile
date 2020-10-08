@@ -42,7 +42,7 @@ export LESS_TERMCAP_ue='[0m'
 
 # JAVA settings
 export _JAVA_AWT_WM_NONREPARENTING=1
-export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="${XDG_CONFIG_HOME}/java"
+export _JAVA_OPTIONS="-Djava.util.prefs.userRoot=${XDG_CONFIG_HOME}/java -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 
 # Git
 export GIT_PS1_SHOWDIRTYSTATE=1
