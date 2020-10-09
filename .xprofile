@@ -1,14 +1,26 @@
+#!/bin/sh
+
+
+# System bar
 dwmblocks &
 nm-applet &
 redshift-gtk &
+
+# Deamons
 unclutter &
 udiskie &
 dunst &
 background &
+
+# Peripherals
+numlockx on &
+xrdb -load "${HOME}/.Xresources" &
 imwheel 2>/dev/null &
+
+# Other
 light-locker --lock-on-suspend &
 rfkill block bluetooth &
-numlockx on &
-xrdb -load ~/.Xresources &
-picom -CGb --experimental-backends --config="$HOME"/.config/picom/picom_"$(hostname)".conf &
+picom -CGb --experimental-backends --config="${HOME}"/.config/picom/picom_"$(hostname)".conf &
+
+# tmux
 tmux-init &
