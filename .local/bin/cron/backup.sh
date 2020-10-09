@@ -30,6 +30,7 @@ borg create                              \
 	--exclude-caches                   \
 	--exclude '/home/backup/*'         \
 	--exclude '/home/*/.cache/*'       \
+	--exclude '/home/Downloads/*'      \
 	--exclude '/var/cache/*'           \
 	--exclude '/var/tmp/*'             \
 	                                   \
