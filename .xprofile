@@ -11,3 +11,4 @@ rfkill block bluetooth &
 numlockx on &
 xrdb -load ~/.Xresources &
 picom -CGb --experimental-backends --config="$HOME"/.config/picom/picom_"$(hostname)".conf &
+tmux-init &

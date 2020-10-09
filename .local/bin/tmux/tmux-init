@@ -1,0 +1,8 @@
+#!/bin/sh
+
+
+CURRENTFOLDER="$(dirname "$0")"
+
+"${CURRENTFOLDER}/tmux-general" -d
+"${CURRENTFOLDER}/tmux-study" -d
+"${CURRENTFOLDER}/tmux-python" -d

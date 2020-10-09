@@ -1,0 +1,19 @@
+#!/bin/sh
+
+
+SESSION_NAME='python'
+SESSION_DIR="${HOME}/Documents/cvut/BI-PYT/"
+
+if ! tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
+	tmux new-session -s "$SESSION_NAME" -n edit -c "$SESSION_DIR" -d
+	tmux send -t "$SESSION_NAME" 'git pull' C-m
+	tmux send -t "$SESSION_NAME" 'conda activate bipyt' C-m
+
+	tmux new-window -t "$SESSION_NAME" -n jupyter
+	tmux send -t "$SESSION_NAME":2 'conda activate bipyt' C-m
+	tmux send -t "$SESSION_NAME":2 'jupyter notebook --no-browser' C-m
+
+	tmux select-window -t "$SESSION_NAME":1
+fi
+
+[ "$1" != '-d' ] && tmux attach -t "$SESSION_NAME"

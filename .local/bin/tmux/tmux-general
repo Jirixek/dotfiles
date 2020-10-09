@@ -1,0 +1,11 @@
+#!/bin/sh
+
+
+SESSION_NAME='general'
+SESSION_DIR="$HOME"
+
+if ! tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
+	tmux new-session -s "$SESSION_NAME" -c "$SESSION_DIR" -d
+fi
+
+[ "$1" != '-d' ] && tmux attach -t "$SESSION_NAME"
