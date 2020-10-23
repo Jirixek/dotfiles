@@ -1,3 +1,6 @@
+#!/bin/sh
+
+
 # Path and XDG
 echo "$PATH" | grep -qF "${HOME}/.local/bin/" || \
 export PATH="$(find "${HOME}/.local/bin/" -maxdepth 1 -type d -printf '%p:')$PATH"
