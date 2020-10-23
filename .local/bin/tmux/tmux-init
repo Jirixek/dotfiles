@@ -3,6 +3,8 @@
 
 CURRENTFOLDER="$(dirname "$0")"
 
-"${CURRENTFOLDER}/tmux-general" -d
-"${CURRENTFOLDER}/tmux-study" -d
-"${CURRENTFOLDER}/tmux-python" -d
+for tmux_file in "${CURRENTFOLDER}"/tmux-*; do
+	BASENAME="$(basename "$tmux_file")"
+	[ "$BASENAME" = 'tmux-init' ] && continue
+	"$tmux_file" -d
+done
