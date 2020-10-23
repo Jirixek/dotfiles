@@ -63,6 +63,7 @@ alias gdf='cd "$HOME/Documents/faktury/"'
 alias gdl='cd "$HOME/Documents/latex/"'
 alias gdP='cd "$HOME/Documents/private/"'
 alias gdp='cd "$HOME/Documents/programming/"'
+alias gdw='cd "$HOME/Documents/workswell/"'
 
 alias gD='cd "$HOME/Downloads/"'
 alias gM='cd "$HOME/Music/"'
@@ -106,6 +107,7 @@ alias fdf="fzf_mapping \"\$HOME/Documents/faktury/\""
 alias fdl="fzf_mapping \"\$HOME/Documents/latex/\""
 alias fdP="fzf_mapping \"\$HOME/Documents/private/\""
 alias fdp="fzf_mapping \"\$HOME/Documents/programming/\""
+alias fdw="fzf_mapping \"\$HOME/Documents/workswell/\""
 
 alias fD="fzf_mapping  \"\$HOME/Downloads/\""
 alias fM="fzf_mapping  \"\$HOME/Music/\""

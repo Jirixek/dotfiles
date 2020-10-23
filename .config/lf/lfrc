@@ -341,6 +341,7 @@ map gdf cd ~/Documents/faktury/
 map gdl cd ~/Documents/latex/
 map gdP cd ~/Documents/private/
 map gdp cd ~/Documents/programming/
+map gdw cd ~/Documents/workswell/
 
 map gD  cd ~/Downloads/
 map gM  cd ~/Music/
