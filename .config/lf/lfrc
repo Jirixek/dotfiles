@@ -309,6 +309,12 @@ cmap <down> cmd-history-next
 # ===================
 #  Directory mapping
 # ===================
+
+# Previous folder
+# Summon ' bookmark if doesn't exists
+push m'
+map g- push ''
+
 # Root
 map gR  cd /
 map ge  cd /etc/
