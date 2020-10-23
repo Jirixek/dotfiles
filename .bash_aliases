@@ -78,6 +78,9 @@ alias gv='cd "$HOME/Videos/"'
 # ======================
 #  Fuzzy finder mapping
 # ======================
+# Current folder
+alias f="fzf_mapping  './'"
+
 # Root
 alias fR="fzf_mapping  '/'"
 alias fe="fzf_mapping  '/etc/'"

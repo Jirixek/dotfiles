@@ -6,7 +6,7 @@ v () {
 	stty -ixon && "$EDITOR" "$@" && stty ixon
 }
 
-f () {
+g () {
 	# setup lf so it changes to the last directory when exited
 	local tempfile
 	tempfile="$(mktemp)" || {

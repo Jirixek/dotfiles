@@ -21,7 +21,7 @@ export SUDO_EDITOR='nvim'
 export TERMINAL='st'
 export BROWSER='firefox'
 export READER='evince'
-export FILE='f'
+export FILE='g'
 
 # ~/ Clean-up
 export GTK2_RC_FILES="${HOME}/.config/gtk-2.0/gtkrc-2.0"
