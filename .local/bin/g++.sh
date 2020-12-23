@@ -5,6 +5,7 @@
 # Compile .c/.cpp program and execute unit tests accordingly
 
 prg="$(basename "$0")"
+SRCFOLDER="$(dirname "$0")"/../src/
 
 getHelp() {
 	echo "Usage: $prg [OPTIONS] [FILE]"
@@ -21,11 +22,8 @@ getHelp() {
 }
 
 compile () {
-	FLAGS=(-Wextra -Wformat-nonliteral -Wpointer-arith
-	       -Winline -Wundef -Wno-unused-parameter -Wcast-qual
-	       -Wwrite-strings -Wcast-align -Wfloat-equal
-		 -std=c++17 -Wall -pedantic -Wno-long-long)
-	LIBS=(-lpng)
+	readarray -t FLAGS <"$SRCFOLDER"/cpp_compilation_flags.txt
+	readarray -t LIBS <"$SRCFOLDER"/cpp_library_flags.txt
 
 	if [ -f "$PWD/Makefile" ]; then
 		make

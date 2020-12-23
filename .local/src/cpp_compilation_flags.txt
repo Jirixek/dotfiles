@@ -1,0 +1,14 @@
+-Wextra
+-Wformat-nonliteral
+-Wpointer-arith
+-Winline
+-Wundef
+-Wno-unused-parameter
+-Wcast-qual
+-Wwrite-strings
+-Wcast-align
+-Wfloat-equal
+-std=c++17
+-Wall
+-pedantic
+-Wno-long-long
