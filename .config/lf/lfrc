@@ -4,7 +4,6 @@
 set shell bash # Interpreter for shell commands (needs to be POSIX compatible)
 
 set ratios 1:3:4 # Set ratios similar to ranger
-set color256 on
 set drawbox on
 set scrolloff 4
 set ifs "\n"
