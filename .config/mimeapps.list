@@ -32,3 +32,7 @@ application/pdf=okularApplication_pdf.desktop;
 image/jpeg=org.gnome.eog.desktop;
 video/mp4=mpv.desktop;
 application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop;
+video/webm=mpv.desktop;
+application/x-ipynb+json=firefox.desktop;
+application/msword=libreoffice-writer.desktop;
+audio/mpeg=mpv.desktop;
