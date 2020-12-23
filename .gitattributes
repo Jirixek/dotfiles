@@ -1,1 +1,2 @@
 .config/okularpartrc filter=okularpartrc
+.local/src/pkglist* filter=pkglist

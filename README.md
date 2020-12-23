@@ -25,4 +25,5 @@ Local git filters I use in order to exclude volatile stuff in config files.
 
 ```[bash]
 dfl config filter.okularpartrc.clean "sed -e '/^BuiltinAnnotationTools.*/d' -e '/^QuickAnnotationTools.*/d'"
+dfl config filter.pkglist.clean "sed '/^linux-custom.*/d'"
 ```

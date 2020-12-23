@@ -66,9 +66,9 @@ while [ "$#" -gt 0 ]; do
 done
 
 new_pkgs="$(comm -13 <(echo "$current_pkgs") <(filterMatches <(sort "$targetFile")))"
-yayInstall "$new_pkgs" || exit
+yayInstall "$new_pkgs"
 
 # must regenerate it again (because of last command)
 current_pkgs="$(pacman -Qqe | sort)"
 old_pkgs="$(filterMatches <(comm -23 <(echo "$current_pkgs") <(sort "$targetFile")))"
-yayUninstall "$old_pkgs" || exit
+yayUninstall "$old_pkgs"
