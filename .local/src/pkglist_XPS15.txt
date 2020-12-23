@@ -3,6 +3,8 @@ alsa-firmware
 alsa-utils
 anki
 arandr
+arduino
+arduino-avr-core
 asp
 autoconf
 automake
@@ -58,8 +60,7 @@ imwheel
 intel-ucode
 j4-dmenu-desktop
 jack2
-java8-openjfx
-kitty
+jre-openjdk
 lf-git
 libnma
 libreoffice-still
@@ -78,6 +79,7 @@ make
 man-db
 man-pages
 minicom
+miniconda3
 mint-y-icons
 mlocate
 mpc
@@ -101,6 +103,7 @@ openssh
 openvpn
 os-prober
 osync
+packettracer
 pacman
 par
 patch
@@ -174,7 +177,6 @@ wget
 which
 xclip
 xdotool
-xfce4-power-manager
 xkblayout-state-git
 xorg-server
 xorg-xfontsel
