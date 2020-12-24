@@ -66,8 +66,6 @@ libreoffice-still
 libtool
 libva-mesa-driver
 libxft-bgra-git
-lightdm-slick-greeter
-light-locker
 linux
 linux-firmware
 linux-headers

@@ -14,11 +14,11 @@ background &
 
 # Peripherals
 numlockx on &
+xset r rate 350 50 &
 xrdb -load "${HOME}/.Xresources" &
 imwheel 2>/dev/null &
 
 # Other
-light-locker --lock-on-suspend &
 rfkill block bluetooth &
 picom -CGb --experimental-backends --config="${HOME}"/.config/picom/picom_"$(hostname)".conf &
 

@@ -1,3 +1,5 @@
-[ -f ~/.xprofile ] && . ~/.xprofile
+#!/bin/sh
 
-exec startdwm
+
+[ -f ~/.xprofile ] && . ~/.xprofile
+slock && exec startdwm
