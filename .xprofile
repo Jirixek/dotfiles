@@ -16,7 +16,6 @@ background &
 numlockx on &
 xset r rate 350 50 &
 xrdb -load "${HOME}/.Xresources" &
-imwheel 2>/dev/null &
 
 # Other
 rfkill block bluetooth &

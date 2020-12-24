@@ -54,13 +54,13 @@ gzip
 haveged
 highlight
 htop
-imwheel
 ipython
 j4-dmenu-desktop
 jack2
 java8-openjfx
 kitty
 lf
+libinput-multiplier
 libnma
 libreoffice-still
 libtool
