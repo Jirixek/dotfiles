@@ -79,8 +79,8 @@ service_enable () {
 	     pkgfile-update.timer         \
 	     bluetooth.service            \
 	     cronie.service               \
-	     lightdm                      \
-	     fstrim.timer
+	     fstrim.timer                 \
+           slock@jirik.service
 	root_exit=$?
 
 	systemctl --user enable psd.service mpd.service
