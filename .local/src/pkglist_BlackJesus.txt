@@ -57,9 +57,8 @@ htop
 ipython
 j4-dmenu-desktop
 jack2
-java8-openjfx
-kitty
-lf
+jre-openjdk
+lf-git
 libinput-multiplier
 libnma
 libreoffice-still
@@ -68,9 +67,7 @@ libva-mesa-driver
 libxft-bgra-git
 linux
 linux-firmware
-linux-headers
 lxappearance
-lzop
 m4
 maim
 make
@@ -106,12 +103,15 @@ openssh
 openvpn
 os-prober
 osync
+packettracer
 pacman
 par
 patch
 pavucontrol
+pbzip2
 perl-file-mimeinfo
 picom
+pigz
 pkgconf
 pkgfile
 profile-sync-daemon
@@ -175,7 +175,6 @@ wget
 which
 xclip
 xdotool
-xfce4-power-manager
 xkblayout-state-git
 xorg-server
 xorg-xfontsel
