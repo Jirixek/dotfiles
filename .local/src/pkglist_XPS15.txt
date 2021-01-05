@@ -57,6 +57,7 @@ haveged
 highlight
 htop
 intel-ucode
+ipython
 j4-dmenu-desktop
 jack2
 jre-openjdk
@@ -66,7 +67,6 @@ libnma
 libreoffice-still
 libtool
 libva-intel-driver
-libva-utils
 libxft-bgra-git
 linux
 linux-firmware
