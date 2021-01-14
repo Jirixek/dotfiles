@@ -1,0 +1,12 @@
+^bbswitch$
+^bumblebee$
+^intel-ucode$
+^intel.*
+^libva.*
+^linux-headers$
+^nvidia.*
+^mesa.*
+^tlp.*
+^mathematica$
+^ttf-ms.*$
+^oracle-sqldeveloper$

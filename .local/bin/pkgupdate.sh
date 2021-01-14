@@ -2,10 +2,11 @@
 
 
 hostnameFile="$(dirname "$0")/../src/pkglist_${HOSTNAME}.txt"
+ignoreFile="$(dirname "$0")/../src/pkglistignore.txt"
 
 getHelp() {
 	echo "Usage: $(basename "$0") [OPTIONS] [FILES]"
-	echo "Auxiliary script to help manage ./src/pkglist.txt list"
+	echo "Auxiliary script to help manage ./src/pkglist.txt"
 	echo
 	echo "Options:"
 	echo "-g [INPUT] [OUTPUT]      Generate file without drivers and other machine specifis packages"
@@ -22,21 +23,8 @@ yayUninstall () {
 }
 
 filterMatches () {
-	sed -E '
-	/^bbswitch$/d;
-	/^bumblebee$/d;
-	/^intel-ucode$/d;
-	/^intel.*/d;
-	/^libva.*/d;
-	/^nvidia.*/d;
-	/^mesa.*/d;
-	/^tlp.*/d;
-	/^mathematica$/d;
-	/^ttf-ms.*$/d;
-	/^st$/d;
-	/^dwm$/d;
-	/^oracle-sqldeveloper$/d;
-	' "$1"
+	filter="$(sed 's/.*/\/&\/d;/' "$ignoreFile")"
+	sed -E "$filter" "$1"
 }
 
 [ ! -d "$(dirname "$hostnameFile")" ] && getHelp
@@ -64,6 +52,8 @@ while [ "$#" -gt 0 ]; do
 			;;
 	esac
 done
+
+[ ! -f "$targetFile" ] && getHelp
 
 new_pkgs="$(comm -13 <(echo "$current_pkgs") <(filterMatches <(sort "$targetFile")))"
 yayInstall "$new_pkgs"
