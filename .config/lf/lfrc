@@ -327,8 +327,8 @@ map gmw cd /mnt/windows/
 
 map gr  %lf -remote "send $id cd /run/media/$USER/"
 
-map gv. cd /var/
-map gvl cd /var/lib/lxc/
+map gV. cd /var/
+map gVl cd /var/lib/lxc/
 
 # Home
 map gh  cd ~/

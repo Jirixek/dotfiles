@@ -47,8 +47,8 @@ alias gmw='cd "/mnt/windows/"'
 
 alias gr='cd "/run/media/$USER/"'
 
-alias gv.='cd "/var/"'
-alias gvl='cd "/var/lib/lxc/"'
+alias gV.='cd "/var/"'
+alias gVl='cd "/var/lib/lxc/"'
 
 # Home
 alias gh='cd "$HOME/"'
